@@ -1,5 +1,27 @@
-# StardewValley
-Decompiled Stardew Valley. Batteries not included.
+# StardewValley - TAS Engine
+
+Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew Valley](https://github.com/veywrn/StardewValley) repo. I've built multiple variations of this code on OSX, this is an attempt to move over to Windows.
+
+## TODO List (List in progress)
+
+- [ ] Wrap Update/Draw calls with basic controller logic
+    - [ ] sync draws and calls
+    - [ ] force async code to run sync'd
+- [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
+- [ ] Handle keypress to advance 1 frame
+- [ ] Store input state on frame advance
+- [ ] Write input state list to file
+- [ ] Get clean restart working (from program launch)
+    - [ ] Override Random.cs
+    - [ ] Override DateTime.cs
+- [ ] Get dirty restart working (from mid-run state)
+    - [ ] Override Program.cs to reload static constructors/clear variables
+    - [ ] Dump the current window and reload a new window (one of the benefits of being on Windows with XNA)
+- [ ] Get fast restart working
+    - [ ] Override SpriteBatch.cs
+- [ ] Reimplement command console
+    - [ ] toggle key to bring down overlay
+
 
 ## Building
 To build the repository:
