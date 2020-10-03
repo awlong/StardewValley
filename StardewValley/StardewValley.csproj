@@ -93,4 +93,8 @@
       <LogicalName>Microsoft.Xna.Framework.RuntimeProfile</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)Content&quot; &quot;$(TargetDir)Content&quot;  /S /Y /E /D /I" />
+  </Target>
 </Project>

@@ -27,6 +27,10 @@ To build the repository:
     - Microsoft.Xna.Framework.Graphics.dll
     - Microsoft.Xna.Framework.Xact.dll
 
+    For me, ran the following command in terminal:
+
+`cp C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.*\*\*.dll lib\`
+
 5.  Build
 
 ## Running
