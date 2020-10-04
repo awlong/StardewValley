@@ -209,9 +209,8 @@ namespace StardewValley.Menus
 				}
 				Game1.playSound("cameraNoise");
 			}));
-			string screenshot_folder = "Screenshots";
-			Environment.SpecialFolder screenshot_folder_root = (Environment.OSVersion.Platform != PlatformID.Unix) ? Environment.SpecialFolder.ApplicationData : Environment.SpecialFolder.LocalApplicationData;
-			string main_folder = Path.Combine(Path.Combine(Environment.GetFolderPath(screenshot_folder_root), "StardewValley"), screenshot_folder);
+			// NOTE: Redirecting paths
+			string main_folder = TAS.Constants.ScreenshotPath;
 			if (Directory.Exists(main_folder))
 			{
 				options.Add(new OptionsButton(Game1.content.LoadString("Strings\\UI:OptionsPage_OpenFolder"), delegate

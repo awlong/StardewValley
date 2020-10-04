@@ -104,7 +104,8 @@ namespace StardewValley
 
 		private void ensureFolderStructureExists()
 		{
-			FileInfo info2 = new FileInfo(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley", "placeholder")));
+			// NOTE: Redirecting paths
+			FileInfo info2 = new FileInfo(Path.Combine(TAS.Constants.BasePath, "placeholder"));
 			if (!info2.Directory.Exists)
 			{
 				info2.Directory.Create();
@@ -157,7 +158,8 @@ namespace StardewValley
 
 		private void _savePreferences()
 		{
-			string fullFilePath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), _filename);
+			// NOTE: Redirecting paths
+			string fullFilePath = Path.Combine(TAS.Constants.BasePath, _filename);
 			try
 			{
 				ensureFolderStructureExists();
@@ -239,7 +241,8 @@ namespace StardewValley
 
 		private void _loadPreferences()
 		{
-			string fullFilePath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), _filename);
+			// NOTE: Redirecting paths
+			string fullFilePath = Path.Combine(TAS.Constants.BasePath, _filename);
 			if (!File.Exists(fullFilePath))
 			{
 				Console.WriteLine("path '{0}' did not exist and will be created", fullFilePath);

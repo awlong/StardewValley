@@ -404,7 +404,8 @@ namespace StardewValley.Menus
 		private static List<Farmer> FindSaveGames()
 		{
 			List<Farmer> results = new List<Farmer>();
-			string pathToDirectory = Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"));
+			// NOTE: Redirecting paths
+			string pathToDirectory = TAS.Constants.SavesPath;
 			if (Directory.Exists(pathToDirectory))
 			{
 				string[] directories = Directory.GetDirectories(pathToDirectory);
@@ -635,7 +636,8 @@ namespace StardewValley.Menus
 			if (slot != null)
 			{
 				string filenameNoTmpString = slot.Farmer.slotName;
-				string fullFilePath = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString));
+				// NOTE: Redirecting paths
+				string fullFilePath = Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString);
 				Thread.Sleep(Game1.random.Next(1000, 5000));
 				if (Directory.Exists(fullFilePath))
 				{

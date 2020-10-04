@@ -70,7 +70,8 @@ namespace StardewValley
 
 		public string Dump()
 		{
-			string path = Path.Combine(Environment.GetFolderPath((Environment.OSVersion.Platform != PlatformID.Unix) ? Environment.SpecialFolder.ApplicationData : Environment.SpecialFolder.LocalApplicationData), "StardewValley", "Profiling", DateTime.Now.Ticks + ".csv");
+			// NOTE: Redirecting paths
+			string path = Path.Combine(TAS.Constants.ProfilingPath, DateTime.Now.Ticks + ".csv");
 			FileInfo info = new FileInfo(path);
 			if (!info.Directory.Exists)
 			{

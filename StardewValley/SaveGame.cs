@@ -365,9 +365,10 @@ namespace StardewValley
 			string friendlyName = FilterFileName(Game1.GetSaveGameName());
 			string filenameNoTmpString = friendlyName + "_" + Game1.uniqueIDForThisGame;
 			string filenameWithTmpString = friendlyName + "_" + Game1.uniqueIDForThisGame + tmpString;
-			string fullFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), filenameWithTmpString);
+			// NOTE: Redirecting paths
+			string fullFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), filenameWithTmpString);
 			ensureFolderStructureExists();
-			string justFarmerFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), "SaveGameInfo" + tmpString);
+			string justFarmerFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), "SaveGameInfo" + tmpString);
 			if (File.Exists(fullFilePath3))
 			{
 				File.Delete(fullFilePath3);
@@ -441,10 +442,11 @@ namespace StardewValley
 				throw new TaskCanceledException();
 			}
 			yield return 2;
-			fullFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), filenameNoTmpString);
-			justFarmerFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), "SaveGameInfo");
-			string fullFilePathOld = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), filenameNoTmpString + "_old");
-			string justFarmerFilePathOld = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), "SaveGameInfo_old");
+			// NOTE: Redirecting paths
+			fullFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), filenameNoTmpString);
+			justFarmerFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), "SaveGameInfo");
+			string fullFilePathOld = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), filenameNoTmpString + "_old");
+			string justFarmerFilePathOld = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), "SaveGameInfo_old");
 			if (File.Exists(fullFilePathOld))
 			{
 				File.Delete(fullFilePathOld);
@@ -469,8 +471,9 @@ namespace StardewValley
 			{
 				File.Delete(justFarmerFilePath3);
 			}
-			fullFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), filenameWithTmpString);
-			justFarmerFilePath3 = Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filenameNoTmpString), "SaveGameInfo" + tmpString);
+			// NOTE: Redirecting paths
+			fullFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), filenameWithTmpString);
+			justFarmerFilePath3 = Path.Combine(Path.Combine(TAS.Constants.SavesPath, filenameNoTmpString), "SaveGameInfo" + tmpString);
 			if (File.Exists(fullFilePath3))
 			{
 				File.Move(fullFilePath3, fullFilePath3.Replace(tmpString, ""));
@@ -499,12 +502,13 @@ namespace StardewValley
 				}
 			}
 			string filename = friendlyName + "_" + Game1.uniqueIDForThisGame + tmpString;
-			FileInfo info3 = new FileInfo(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filename));
+			// NOTE: Redirecting paths
+			FileInfo info3 = new FileInfo(Path.Combine(TAS.Constants.SavesPath, filename));
 			if (!info3.Directory.Exists)
 			{
 				info3.Directory.Create();
 			}
-			info3 = new FileInfo(Path.Combine(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"), filename), "dummy"));
+			info3 = new FileInfo(Path.Combine(Path.Combine(TAS.Constants.SavesPath, filename), "dummy"));
 			if (!info3.Directory.Exists)
 			{
 				info3.Directory.Create();
@@ -533,7 +537,8 @@ namespace StardewValley
 			}
 			yield return 1;
 			Stream stream = null;
-			string fullFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley", "Saves", file, file);
+			// NOTE: Redirecting paths
+			string fullFilePath = Path.Combine(TAS.Constants.SavesPath, file, file);
 			if (!File.Exists(fullFilePath))
 			{
 				fullFilePath += ".xml";

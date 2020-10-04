@@ -59,21 +59,21 @@ namespace StardewValley
 
 		public static string WriteLog(LogType logType, string message, bool append = false)
 		{
-			string logDirectory2 = "ErrorLogs";
+			// NOTE: Redirecting paths
+			string logDirectory2;
 			string filename;
 			if (logType != 0 && logType == LogType.Disconnect)
 			{
-				logDirectory2 = "DisconnectLogs";
+				logDirectory2 = TAS.Constants.DisconnectLogsPath;
 				filename = ((Game1.player != null) ? Game1.player.Name : "NullPlayer") + "_" + DateTime.Now.Month + "-" + DateTime.Now.Day + ".txt";
 			}
 			else
 			{
-				logDirectory2 = "ErrorLogs";
+				logDirectory2 = TAS.Constants.ErrorLogsPath;
 				filename = ((Game1.player != null) ? Game1.player.Name : "NullPlayer") + "_" + Game1.uniqueIDForThisGame + "_" + ((Game1.player != null) ? ((int)Game1.player.millisecondsPlayed) : Game1.random.Next(999999)) + ".txt";
 			}
-			int folder = (Environment.OSVersion.Platform != PlatformID.Unix) ? 26 : 28;
-			string fullFilePath = Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder)folder), "StardewValley"), logDirectory2), filename);
-			FileInfo info2 = new FileInfo(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder)folder), "StardewValley"), logDirectory2), "asdfasdf"));
+			string fullFilePath = Path.Combine(logDirectory2, filename);
+			FileInfo info2 = new FileInfo(Path.Combine(logDirectory2, "asdfasdf"));
 			if (!info2.Directory.Exists)
 			{
 				info2.Directory.Create();

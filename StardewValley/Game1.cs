@@ -33,6 +33,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TAS.Wrappers;
+using TAS;
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
@@ -1640,7 +1641,8 @@ namespace StardewValley
 		{
 			Console.WriteLine("GetNumFarmsSaved(); begin");
 			int results = 0;
-			string pathToDirectory = Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley"), "Saves"));
+			// NOTE: Redirecting paths
+			string pathToDirectory = TAS.Constants.SavesPath;
 			if (!Directory.Exists(pathToDirectory))
 			{
 				Console.WriteLine("Directory.Exists returned false.");
@@ -12885,10 +12887,9 @@ namespace StardewValley
 						}
 					}
 				}
-				string logDirectory = "Screenshots";
-				int folder = (Environment.OSVersion.Platform != PlatformID.Unix) ? 26 : 28;
-				string fullFilePath = Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder)folder), "StardewValley"), logDirectory), filename);
-				FileInfo info2 = new FileInfo(Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder)folder), "StardewValley"), logDirectory), "asdfasdf"));
+				// NOTE: Redirecting paths
+				string fullFilePath = Path.Combine(TAS.Constants.ScreenshotPath, filename);
+				FileInfo info2 = new FileInfo(Path.Combine(TAS.Constants.ScreenshotPath, "asdfasdf"));
 				if (!info2.Directory.Exists)
 				{
 					info2.Directory.Create();
