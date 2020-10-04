@@ -363,7 +363,8 @@ namespace StardewValley.Menus
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				return FindSaveGames();
 			});
-			_initTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			_initTask.RunSynchronously();
 		}
 
 		public virtual void UpdateButtons()
@@ -670,7 +671,8 @@ namespace StardewValley.Menus
 						Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 						deleteFile(selectedForDelete);
 					});
-					_deleteTask.Start();
+					// NOTE: Force sync (Start->RunSynchronously)
+					_deleteTask.RunSynchronously();
 					deleteConfirmationScreen = false;
 					if (Game1.options.snappyMenus && Game1.options.gamepadControls)
 					{

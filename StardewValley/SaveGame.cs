@@ -249,7 +249,8 @@ namespace StardewValley
 					}
 				}
 			});
-			saveTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			saveTask.RunSynchronously();
 			while (!saveTask.IsCanceled && !saveTask.IsCompleted && !saveTask.IsFaulted)
 			{
 				yield return 1;
@@ -566,7 +567,8 @@ namespace StardewValley
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				pendingSaveGame = (SaveGame)serializer.Deserialize(stream);
 			});
-			deserializeTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			deserializeTask.RunSynchronously();
 			while (!deserializeTask.IsCanceled && !deserializeTask.IsCompleted && !deserializeTask.IsFaulted)
 			{
 				yield return 20;
@@ -602,7 +604,8 @@ namespace StardewValley
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				Game1.loadForNewGame(loadedGame: true);
 			});
-			loadNewGameTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			loadNewGameTask.RunSynchronously();
 			while (!loadNewGameTask.IsCanceled && !loadNewGameTask.IsCompleted && !loadNewGameTask.IsFaulted)
 			{
 				yield return 24;
@@ -645,7 +648,8 @@ namespace StardewValley
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				loadDataToFarmer(loaded.player);
 			});
-			loadFarmerTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			loadFarmerTask.RunSynchronously();
 			while (!loadFarmerTask.IsCanceled && !loadFarmerTask.IsCompleted && !loadFarmerTask.IsFaulted)
 			{
 				yield return 1;
@@ -691,7 +695,8 @@ namespace StardewValley
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				loadDataToLocations(loaded.locations);
 			});
-			loadLocationsTask.Start();
+			// NOTE: Force sync (Start->RunSynchronously)
+			loadLocationsTask.RunSynchronously();
 			while (!loadLocationsTask.IsCanceled && !loadLocationsTask.IsCompleted && !loadLocationsTask.IsFaulted)
 			{
 				yield return 1;

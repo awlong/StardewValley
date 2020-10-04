@@ -4,9 +4,10 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
 
 ## TODO List (List in progress)
 
-- [ ] Wrap Update/Draw calls with basic controller logic
-    - [ ] sync draws and calls
-    - [ ] force async code to run sync'd
+- [X] Wrap Update/Draw calls with basic controller logic
+    - [X] sync draws and calls
+    - [X] force async code to run sync'd
+- [ ] Change game to use alternate constants for save location/etc
 - [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
 - [ ] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
@@ -21,6 +22,9 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] Override SpriteBatch.cs
 - [ ] Reimplement command console
     - [ ] toggle key to bring down overlay
+    - [ ] take keyboard input to write text
+    - [ ] run command based on input text
+
 
 
 ## Building

@@ -196,13 +196,14 @@ namespace StardewValley.Menus
 
 		private void loadClientOptions()
 		{
+			// NOTE: Force sync (Start->RunSynchronously)
 			new Task(delegate
 			{
 				StartupPreferences startupPreferences = new StartupPreferences();
 				startupPreferences.loadPreferences(async: false, updateLanguage: false);
 				Game1.options = startupPreferences.clientOptions;
 				Game1.initializeVolumeLevels();
-			}).Start();
+			}).RunSynchronously();
 		}
 
 		protected override string getStatusText()

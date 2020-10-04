@@ -32,6 +32,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TAS.Wrappers;
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
@@ -1626,12 +1627,13 @@ namespace StardewValley
 
 		public static void GetNumFarmsSavedAsync(ReportNumFarms callback)
 		{
+			// NOTE: Force sync (Start->RunSynchronously)
 			new Task(delegate
 			{
 				Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 				int numFarmsSaved = GetNumFarmsSaved();
 				callback(numFarmsSaved);
-			}).Start();
+			}).RunSynchronously();
 		}
 
 		public static int GetNumFarmsSaved()
@@ -3093,21 +3095,26 @@ namespace StardewValley
 
 		protected override void Update(GameTime gameTime)
 		{
-			if (input.GetGamePadState().IsButtonDown(Buttons.RightStick))
+			if (UpdateWrapper.Prefix(ref gameTime))
 			{
-				rightStickHoldTime += gameTime.ElapsedGameTime.Milliseconds;
+				// base Game1.Update(...) method
+				if (input.GetGamePadState().IsButtonDown(Buttons.RightStick))
+				{
+					rightStickHoldTime += gameTime.ElapsedGameTime.Milliseconds;
+				}
+				_update(gameTime);
+				Rumble.update(gameTime.ElapsedGameTime.Milliseconds);
+				if (options.gamepadControls && thumbstickMotionMargin > 0)
+				{
+					thumbstickMotionMargin -= gameTime.ElapsedGameTime.Milliseconds;
+				}
+				if (!input.GetGamePadState().IsButtonDown(Buttons.RightStick))
+				{
+					rightStickHoldTime = 0;
+				}
+				base.Update(gameTime);
 			}
-			_update(gameTime);
-			Rumble.update(gameTime.ElapsedGameTime.Milliseconds);
-			if (options.gamepadControls && thumbstickMotionMargin > 0)
-			{
-				thumbstickMotionMargin -= gameTime.ElapsedGameTime.Milliseconds;
-			}
-			if (!input.GetGamePadState().IsButtonDown(Buttons.RightStick))
-			{
-				rightStickHoldTime = 0;
-			}
-			base.Update(gameTime);
+			UpdateWrapper.Postfix(gameTime);
 		}
 
 		protected override void OnActivated(object sender, EventArgs args)
@@ -3156,7 +3163,8 @@ namespace StardewValley
 			{
 				if (_newDayTask.Status == TaskStatus.Created)
 				{
-					_newDayTask.Start();
+					// NOTE: Force sync (Start->RunSynchronously)
+					_newDayTask.RunSynchronously();
 				}
 				if (_newDayTask.Status >= TaskStatus.RanToCompletion)
 				{
@@ -14339,13 +14347,19 @@ namespace StardewValley
 
 		protected override void Draw(GameTime gameTime)
 		{
-			RenderTarget2D target_screen = null;
-			if (options.zoomLevel != 1f)
+			if (DrawWrapper.Prefix(ref gameTime))
 			{
-				target_screen = screen;
+				// base Game1.Draw(...) method
+				RenderTarget2D target_screen = null;
+				if (options.zoomLevel != 1f)
+				{
+					target_screen = screen;
+				}
+				// TODO: Wrap call to set target_screen
+				_draw(gameTime, target_screen);
+				base.Draw(gameTime);
 			}
-			_draw(gameTime, target_screen);
-			base.Draw(gameTime);
+			DrawWrapper.Postfix(gameTime);
 		}
 
 		protected virtual void _draw(GameTime gameTime, RenderTarget2D target_screen)

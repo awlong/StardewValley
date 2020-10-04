@@ -130,7 +130,8 @@ namespace StardewValley
 						Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 						_savePreferences();
 					});
-					task.Start();
+					// NOTE: Force sync (Start->RunSynchronously)
+					task.RunSynchronously();
 					_task = task;
 					if (!async)
 					{
@@ -207,7 +208,8 @@ namespace StardewValley
 						Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 						_loadPreferences();
 					});
-					task.Start();
+					// NOTE: Force sync (Start->RunSynchronously)
+					task.RunSynchronously();
 					_task = task;
 					if (!async)
 					{
