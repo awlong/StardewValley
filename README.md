@@ -8,6 +8,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [X] sync draws and calls
     - [X] force async code to run sync'd
 - [X] Change game to use alternate constants for save location/etc
+- [X] Wrap the input state
 - [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
 - [ ] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
@@ -32,7 +33,7 @@ To build the repository:
 
 1.  Purchase and install [Stardew Valley](https://www.stardewvalley.net/)
 
-2.  Copy the following files from the Stardew Valley install to /lib/:
+2.  Copy the following files from the Stardew Valley install to .\lib\:
     - BmFont.dll
     - CSteamworks.dll
     - Galaxy.dll
@@ -47,7 +48,7 @@ To build the repository:
 
 3.  Download and install [Microsoft XNA Redistributable 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=27598)
 
-4.  Copy the following files from the XNA install to /lib/:
+4.  Copy the following files from the XNA install to .\lib\:
     - Microsoft.Xna.Framework.dll
     - Microsoft.Xna.Framework.Game.dll
     - Microsoft.Xna.Framework.Graphics.dll
@@ -55,9 +56,9 @@ To build the repository:
 
     For me, ran the following command in terminal:
 
-`cp C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.*\*\*.dll lib\`
+`cp C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.*\*\*.dll .\lib\`
 
-5.  Build
+5.  Build (I had best luck with Community version of Visual Studio 2019)
 
 ## Running
 Copy the /Content/ directory from the Stardew Valley install to the build output 

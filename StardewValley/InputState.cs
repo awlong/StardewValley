@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using TAS.Wrappers;
 
 namespace StardewValley
 {
@@ -11,7 +12,10 @@ namespace StardewValley
 
 		public virtual KeyboardState GetKeyboardState()
 		{
-			return Keyboard.GetState();
+			// Adding an postfix to update if there is input to be injected
+			KeyboardState keyboardState = Keyboard.GetState();
+			InputStateWrapper.Keyboard.Postfix(ref keyboardState);
+			return keyboardState;
 		}
 
 		public virtual GamePadState GetGamePadState()
@@ -25,7 +29,10 @@ namespace StardewValley
 
 		public virtual MouseState GetMouseState()
 		{
-			return Mouse.GetState();
+			// Adding an postfix to update if there is input to be injected
+			MouseState mouseState = Mouse.GetState();
+			InputStateWrapper.Mouse.Postfix(ref mouseState);
+			return mouseState;
 		}
 	}
 }
