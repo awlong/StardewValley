@@ -9,6 +9,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [X] force async code to run sync'd
 - [X] Change game to use alternate constants for save location/etc
 - [X] Wrap the input state
+- [ ] Add generic Reflector class to maintain references to System.Reflection info/streamline metaprogramming
 - [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
 - [X] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
@@ -25,8 +26,17 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] toggle key to bring down overlay
     - [ ] take keyboard input to write text
     - [ ] run command based on input text
-
-
+    - [ ] function where code can launch the console/write to log
+- [ ] Add basic state detection code
+    - [ ] Player can move
+    - [ ] Player using tool
+    - [ ] In dialogue box with prompt
+- [ ] Add basic updating logic
+    - [ ] auto animation cancel
+    - [ ] auto screen fade avance
+    - [ ] auto skip event advance
+    - [ ] auto sleep advance
+    - [ ] auto dialogue box (non-select)
 
 ## Building
 To build the repository:
