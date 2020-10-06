@@ -25,7 +25,7 @@ namespace TAS.Wrappers
             }
             else
             {
-                CanUpdate = true;
+                CanUpdate = Controller.Update();
                 gameTime = gameTime; // TODO: modify later to overriden datetime
             }
             return CanUpdate;
@@ -35,8 +35,8 @@ namespace TAS.Wrappers
         {
             if (CanUpdate)
             {
+                // we updated the frame, make sure we can draw on next call
                 Counter++;
-                // TODO: do stuff
             }
             else
             {

@@ -30,7 +30,7 @@ namespace TAS.Inputs
             kState.Add(key);
         }
 
-        public static void AddKeys(Keys[] keys)
+        public static void AddKeys(IEnumerable<Keys> keys)
         {
             foreach(var key in keys)
             {
@@ -43,7 +43,7 @@ namespace TAS.Inputs
             kState.Remove(key);
         }
 
-        public static void RemoveKeys(Keys[] keys)
+        public static void RemoveKeys(IEnumerable<Keys> keys)
         {
             foreach(var key in keys)
             {
@@ -77,19 +77,31 @@ namespace TAS.Inputs
             mState.RightMouseClicked = click;
         }
 
-        public static void SetMouse(MouseState state)
+        public static void SetMouse(MouseState state, SMouseState controllerState)
         {
-            //TODO: handle case where there are automation logic changes for mouse
-            MoveMouse(state.X, state.Y);
-            SetLeftClick(state.LeftButton == ButtonState.Pressed);
-            SetRightClick(state.RightButton == ButtonState.Pressed);
+            if (controllerState != null)
+            {
+                MoveMouse(controllerState.MouseX, controllerState.MouseY);
+                SetLeftClick(controllerState.LeftMouseClicked);
+                SetRightClick(controllerState.RightMouseClicked);
+            }
+            else
+            {
+                MoveMouse(state.X, state.Y);
+                SetLeftClick(state.LeftButton == ButtonState.Pressed);
+                SetRightClick(state.RightButton == ButtonState.Pressed);
+            }
         }
 
-        public static void SetKeyboard(KeyboardState state)
+        public static void SetKeyboard(KeyboardState state, HashSet<Keys> addedKeys, HashSet<Keys> rejectedKeys)
         {
-            //TODO: handle case where there are rejected/extra keys from automation logic
             ClearKeys();
-            AddKeys(state.GetPressedKeys());
+            if (addedKeys.Count > 0)
+                AddKeys(addedKeys);
+            else
+                AddKeys(state.GetPressedKeys());
+
+            RemoveKeys(rejectedKeys);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace TAS.Wrappers
         {
             // draw after update
             CanDraw = (Counter + 1) == UpdateWrapper.Counter;
+            gameTime = gameTime; // TODO: modify later to overriden datetime
             return CanDraw;
         }
 
@@ -27,20 +28,22 @@ namespace TAS.Wrappers
         {
             if (CanDraw)
             {
-                // TODO: do stuff
+                Controller.Draw();
+                // TODO: update post-frame stuff (DateTime)
                 Counter++;
             }
             else
             {
-                RedrawFrame();
-                InvokeBase(gameTime);
+                RedrawFrame(gameTime);
             }
             CanDraw = false;
         }
 
-        public static void RedrawFrame()
+        public static void RedrawFrame(GameTime gameTime)
         {
             // TODO: write RenderScreenBuffer code
+            // Run the base Game.Draw function so game doesn't hang
+            InvokeBase(gameTime);
         }
 
         public static void InvokeBase(GameTime gameTime)

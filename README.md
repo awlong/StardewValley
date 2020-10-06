@@ -10,7 +10,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
 - [X] Change game to use alternate constants for save location/etc
 - [X] Wrap the input state
 - [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
-- [ ] Handle keypress to advance 1 frame
+- [X] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
 - [ ] Write input state list to file
 - [ ] Get clean restart working (from program launch)
