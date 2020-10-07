@@ -26,7 +26,7 @@ namespace TAS.Wrappers
             else
             {
                 CanUpdate = Controller.Update();
-                gameTime = gameTime; // TODO: modify later to overriden datetime
+                gameTime = StardewValley.DateTime.CurrentGameTime;
             }
             return CanUpdate;
         }

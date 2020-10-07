@@ -15,8 +15,8 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
 - [ ] Store input state on frame advance
 - [ ] Write input state list to file
 - [ ] Get clean restart working (from program launch)
-    - [ ] Override Random.cs
-    - [ ] Override DateTime.cs
+    - [X] Override Random.cs
+    - [X] Override DateTime.cs
 - [ ] Get dirty restart working (from mid-run state)
     - [ ] Override Program.cs to reload static constructors/clear variables
     - [ ] Dump the current window and reload a new window (one of the benefits of being on Windows with XNA)

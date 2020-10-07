@@ -8801,8 +8801,7 @@ namespace StardewValley
 
 		public static ulong NewUniqueIdForThisGame()
 		{
-			DateTime epoc = new DateTime(2012, 6, 22);
-			return (ulong)(long)(DateTime.UtcNow - epoc).TotalSeconds;
+			return (ulong)(long)(DateTime.UtcNow - DateTime.Epoch).TotalSeconds;
 		}
 
 		public static bool IsHorizontalDirection(int direction)

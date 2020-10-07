@@ -21,7 +21,7 @@ namespace TAS.Wrappers
         {
             // draw after update
             CanDraw = (Counter + 1) == UpdateWrapper.Counter;
-            gameTime = gameTime; // TODO: modify later to overriden datetime
+            gameTime = StardewValley.DateTime.CurrentGameTime;
             return CanDraw;
         }
         public static bool ImplPrefix(GameTime gameTime, ref RenderTarget2D screen)
@@ -33,8 +33,8 @@ namespace TAS.Wrappers
         {
             if (CanDraw)
             {
-                // TODO: update post-frame stuff (DateTime)
                 Counter++;
+                StardewValley.DateTime.Update();
             }
             else
             {

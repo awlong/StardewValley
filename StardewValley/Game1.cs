@@ -1577,7 +1577,7 @@ namespace StardewValley
 			triggerPolling = 0;
 			tvStation = -1;
 			tvStationTexture = null;
-			uniqueIDForThisGame = (ulong)(DateTime.UtcNow - new DateTime(2012, 6, 22)).TotalSeconds;
+			uniqueIDForThisGame = (ulong)(DateTime.UtcNow - DateTime.Epoch).TotalSeconds;
 			upPolling = 0f;
 			viewportFreeze = false;
 			viewportHold = 0;

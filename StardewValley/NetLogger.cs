@@ -8,7 +8,7 @@ namespace StardewValley
 	{
 		private Dictionary<string, NetLogRecord> loggedWrites = new Dictionary<string, NetLogRecord>();
 
-		private DateTime timeLastStarted;
+		private System.DateTime timeLastStarted;
 
 		private double priorMillis;
 

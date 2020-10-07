@@ -414,7 +414,7 @@ namespace StardewValley
 				throw new TaskCanceledException();
 			}
 			yield return 2;
-			Game1.player.saveTime = (int)(DateTime.UtcNow - new DateTime(2012, 6, 22)).TotalMinutes;
+			Game1.player.saveTime = (int)(DateTime.UtcNow - DateTime.Epoch).TotalMinutes;
 			try
 			{
 				stream = File.Create(justFarmerFilePath3);

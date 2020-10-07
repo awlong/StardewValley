@@ -9,7 +9,7 @@ namespace StardewValley.Network
 
 		private long bitsUpSinceLastUpdate;
 
-		private DateTime lastUpdateTime = DateTime.Now;
+		private System.DateTime lastUpdateTime = DateTime.Now;
 
 		private double lastBitsDownPerSecond;
 
