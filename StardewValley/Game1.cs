@@ -14356,8 +14356,11 @@ namespace StardewValley
 				{
 					target_screen = screen;
 				}
-				// TODO: Wrap call to set target_screen
-				_draw(gameTime, target_screen);
+				// enforce draw to the screen buffer
+				if (DrawWrapper.ImplPrefix(gameTime, ref target_screen))
+				{
+					_draw(gameTime, target_screen);
+				}
 				base.Draw(gameTime);
 			}
 			DrawWrapper.Postfix(gameTime);
@@ -14977,18 +14980,22 @@ namespace StardewValley
 
 		protected virtual void renderScreenBuffer(RenderTarget2D target_screen)
 		{
-			if (takingMapScreenshot)
+			if (RenderScreenBufferWrapper.Prefix(ref target_screen))
 			{
-				base.GraphicsDevice.SetRenderTarget(null);
+				if (takingMapScreenshot)
+				{
+					base.GraphicsDevice.SetRenderTarget(null);
+				}
+				else if (options.zoomLevel != 1f)
+				{
+					base.GraphicsDevice.SetRenderTarget(null);
+					base.GraphicsDevice.Clear(bgColor);
+					spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+					spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Microsoft.Xna.Framework.Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
+					spriteBatch.End();
+				}
 			}
-			else if (options.zoomLevel != 1f)
-			{
-				base.GraphicsDevice.SetRenderTarget(null);
-				base.GraphicsDevice.Clear(bgColor);
-				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-				spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Microsoft.Xna.Framework.Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
-				spriteBatch.End();
-			}
+			RenderScreenBufferWrapper.Postfix(target_screen);
 		}
 
 		public static void drawWithBorder(string message, Microsoft.Xna.Framework.Color borderColor, Microsoft.Xna.Framework.Color insideColor, Vector2 position)

@@ -48,6 +48,7 @@ namespace TAS.Wrappers
 
         public static void InvokeBase(GameTime gameTime)
         {
+            // TODO: Should this use the reflector logic?
             var method = typeof(Game).GetMethod("Update", BindingFlags.NonPublic | BindingFlags.Instance);
             var funcPtr = method.MethodHandle.GetFunctionPointer();
             if (Game1.game1 != null)

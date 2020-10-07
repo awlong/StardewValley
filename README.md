@@ -9,8 +9,8 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [X] force async code to run sync'd
 - [X] Change game to use alternate constants for save location/etc
 - [X] Wrap the input state
-- [ ] Add generic Reflector class to maintain references to System.Reflection info/streamline metaprogramming
-- [ ] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
+- [X] Add generic Reflector class to maintain references to System.Reflection info/streamline metaprogramming
+- [X] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
 - [X] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
 - [ ] Write input state list to file
