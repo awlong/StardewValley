@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using StardewValley;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +9,18 @@ using TAS.Inputs;
 
 namespace TAS
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class FrameState
     {
         public Random random;
+        [JsonProperty (ItemConverterType=typeof(StringEnumConverter))]
         public SKeyboardState keyboardState;
+        [JsonProperty]
         public SMouseState mouseState;
+        [JsonProperty]
         public string comments;
+        [JsonProperty]
+        public ulong Frame;
 
         public FrameState()
         {
@@ -20,12 +28,14 @@ namespace TAS
             keyboardState = new SKeyboardState();
             mouseState = new SMouseState();
             comments = "";
+            Frame = DateTime.CurrentFrame;
         }
 
         public FrameState(int seed, string comm="")
         {
             random = new Random(seed);
             comments = comm;
+            Frame = DateTime.CurrentFrame;
         }
 
         public FrameState(FrameState o)
@@ -34,6 +44,7 @@ namespace TAS
             keyboardState = new SKeyboardState(o.keyboardState);
             mouseState = new SMouseState(o.mouseState);
             comments = o.comments;
+            Frame = o.Frame;
         }
 
         public FrameState(KeyboardState kstate, MouseState mstate, string comm= "")
@@ -43,6 +54,7 @@ namespace TAS
             keyboardState.IntersectWith(ValidKeys);
             mouseState = new SMouseState(mstate);
             comments = comm;
+            Frame = DateTime.CurrentFrame;
         }
 
         public void toStates(out SKeyboardState kstate, out SMouseState mstate)

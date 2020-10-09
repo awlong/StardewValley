@@ -11,6 +11,7 @@ namespace TAS
         public static readonly string ProfilingPath;
         public static readonly string ErrorLogsPath;
         public static readonly string DisconnectLogsPath;
+        public static readonly string SaveStatePath;
         
         static Constants()
         {
@@ -22,6 +23,8 @@ namespace TAS
 
             ErrorLogsPath = mkdir(BasePath, "ErrorLogs");
             DisconnectLogsPath = mkdir(BasePath, "DisconnectLogs");
+
+            SaveStatePath = mkdir(BasePath, "SaveStates");
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,18 @@ using System.Text;
 
 namespace TAS.Inputs
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class SMouseState
     {
+        [JsonProperty]
         public int MouseX = 0;
+        [JsonProperty]
         public int MouseY = 0;
         public int ScrollWheel = 0;
+        [JsonProperty]
         public bool LeftMouseClicked = false;
         public bool MiddleMouseClicked = false;
+        [JsonProperty]
         public bool RightMouseClicked = false;
         public bool XButton1Clicked = false;
         public bool XButton2Clicked = false;
