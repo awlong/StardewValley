@@ -42,6 +42,13 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] auto sleep advance
     - [ ] auto dialogue box (non-select)
 
+More generic things to consider
+
+- json output gets somewhat large compared to old custom serialization 
+    - current: ~1MB/4500f or 48MB/hr of playback currently with just inputs
+    - previously: 130MB/hr but I stored a complete reconstruction of the RNG seed (~570 bytes/frame, basically 120MB/hr)
+    - not sure this actually matters right now.
+
 ## Building
 To build the repository:
 
