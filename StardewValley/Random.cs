@@ -23,6 +23,7 @@ namespace StardewValley
         }
         public Random(Random other)
         {
+            _random = new System.Random();
             SeedArray = other.SeedArray;
             inext = other.inext;
             inextp = other.inextp;

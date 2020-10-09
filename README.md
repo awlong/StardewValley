@@ -14,7 +14,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
 - [X] Handle keypress to advance 1 frame
 - [ ] Store input state on frame advance
     - [X] Basic FrameState/StateList classes
-    - [ ] Push to/pull from StateList on frame advance
+    - [X] Push to/pull from StateList on frame advance
     - [ ] Read/write StateList to file
 - [ ] Get clean restart working (from program launch)
     - [X] Override Random.cs

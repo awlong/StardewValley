@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using TAS.Inputs;
 using TAS.Overlays;
+using DateTime = StardewValley.DateTime;
 
 namespace TAS
 {
@@ -14,6 +15,7 @@ namespace TAS
     {
         public static Dictionary<string, IOverlay> Overlays;
 
+        public static StateList States;
         private static SMouseState Mouse;
         private static HashSet<Keys> RejectedKeys;
         private static HashSet<Keys> AddedKeys;
@@ -25,6 +27,7 @@ namespace TAS
             IOverlay overlay = new DebugMouse();
             Overlays.Add(overlay.Name, overlay);
 
+            States = new StateList();
             Mouse = null;
             RejectedKeys = new HashSet<Keys>();
             AddedKeys = new HashSet<Keys>();
@@ -34,18 +37,27 @@ namespace TAS
         {
             // get the actual input data loaded
             RealInputState.Update();
-
-            // TODO: some type of logic goes in this function
-
-            bool inputAdvance = HandleRealInput();
-            if (inputAdvance)
+            
+            // check if prior state or current keyboard should advance
+            bool storedInputAdvance = HandleStoredInput();
+            bool realInputAdvance = HandleRealInput();
+            
+            if (realInputAdvance && !storedInputAdvance)
             {
+                // add the new frame data
                 SInputState.SetMouse(RealInputState.mouseState, Mouse);
                 SInputState.SetKeyboard(RealInputState.keyboardState, AddedKeys, RejectedKeys);
+
+                States.Add(new FrameState(SInputState.GetKeyboard(), SInputState.GetMouse()));
+            }
+            else if (storedInputAdvance)
+            {
+                // pull frame data from state list
+                States[(int)DateTime.CurrentFrame].toStates(out SInputState.kState, out SInputState.mState);
             }
             
-            // TODO: add any other logic that might lead to frame advance (stored state)
-            SInputState.Active = inputAdvance;
+            // set flag to ensure input is pulled from state
+            SInputState.Active = realInputAdvance || storedInputAdvance;
             return SInputState.Active;
         }
 
@@ -83,6 +95,15 @@ namespace TAS
                 advance = true;
             }
             return advance;
+        }
+
+        private static bool HandleStoredInput()
+        {
+            if (States.IndexInRange((int)DateTime.CurrentFrame))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
