@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 using StardewValley;
 using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+using TAS.GameLogic;
 using TAS.Inputs;
 using TAS.Overlays;
 using TAS.Wrappers;
@@ -19,24 +16,49 @@ namespace TAS
     public class Controller
     {
         public static Dictionary<string, IOverlay> Overlays;
+        public static Dictionary<string, IGameLogic> GameLogics;
 
         public static SaveState State;
-        private static SMouseState Mouse;
-        private static HashSet<Keys> RejectedKeys;
-        private static HashSet<Keys> AddedKeys;
+
+        private static SMouseState RealMouse;
+        private static HashSet<Keys> RejectedRealKeys;
+        private static HashSet<Keys> AddedRealKeys;
+        private static SMouseState LogicMouse;
+        private static HashSet<Keys> RejectedLogicKeys;
+        private static HashSet<Keys> AddedLogicKeys;
 
         static Controller()
         {
 
             Overlays = new Dictionary<string, IOverlay>();
-            // TODO: use reflector to get all the types from the namespace
-            IOverlay overlay = new DebugMouse();
-            Overlays.Add(overlay.Name, overlay);
+            foreach (var v in Reflector.GetTypesInNamespace(ResetWrapper.ExecutingAssembly, "TAS.Overlays"))
+            {
+                if (v.IsAbstract || v.BaseType != typeof(IOverlay))
+                    continue;
+                IOverlay overlay = (IOverlay)Activator.CreateInstance(v);
+                Overlays.Add(overlay.Name, overlay);
+                Debug.WriteLine("Overlay \"{0}\" added to overlays list", overlay.Name);
+            }
+
+            GameLogics = new Dictionary<string, IGameLogic>();
+            foreach (var v in Reflector.GetTypesInNamespace(ResetWrapper.ExecutingAssembly, "TAS.GameLogic"))
+            {
+                if (v.IsAbstract || v.BaseType != typeof(IGameLogic))
+                    continue;
+                IGameLogic logic = (IGameLogic)Activator.CreateInstance(v);
+                GameLogics.Add(logic.Name, logic);
+                Debug.WriteLine("GameLogic \"{0}\" added to logic list", logic.Name);
+            }
 
             State = new SaveState();
-            Mouse = null;
-            RejectedKeys = new HashSet<Keys>();
-            AddedKeys = new HashSet<Keys>();
+            
+            RealMouse = null;
+            RejectedRealKeys = new HashSet<Keys>();
+            AddedRealKeys = new HashSet<Keys>();
+
+            LogicMouse = null;
+            RejectedLogicKeys = new HashSet<Keys>();
+            AddedLogicKeys = new HashSet<Keys>();
         }
 
         public static bool Update()
@@ -47,24 +69,35 @@ namespace TAS
             // check if prior state or current keyboard should advance
             bool storedInputAdvance = HandleStoredInput();
             bool realInputAdvance = HandleRealInput();
+            bool gameLogicAdvance = HandleGameLogicInput();
             // TODO: only call when a menu is up?
             HandleTextBoxEntry();
             
-            if (realInputAdvance && !storedInputAdvance)
+            if (!storedInputAdvance)
             {
-                // add the new frame data
-                SInputState.SetMouse(RealInputState.mouseState, Mouse);
-                SInputState.SetKeyboard(RealInputState.keyboardState, AddedKeys, RejectedKeys);
+                // write new frame inputs if they exist
+                if (gameLogicAdvance)
+                {
+                    SInputState.SetMouse(RealInputState.mouseState, LogicMouse);
+                    SInputState.SetKeyboard(RealInputState.keyboardState, AddedLogicKeys, RejectedLogicKeys);
 
-                State.FrameStates.Add(new FrameState(SInputState.GetKeyboard(), SInputState.GetMouse()));              
+                    State.FrameStates.Add(new FrameState(SInputState.GetKeyboard(), SInputState.GetMouse()));
+                }
+                else if (realInputAdvance)
+                {
+                    SInputState.SetMouse(RealInputState.mouseState, RealMouse);
+                    SInputState.SetKeyboard(RealInputState.keyboardState, AddedRealKeys, RejectedRealKeys);
+
+                    State.FrameStates.Add(new FrameState(SInputState.GetKeyboard(), SInputState.GetMouse()));
+                }
             }
-            else if (storedInputAdvance)
+            else
             {
                 // pull frame data from state list
                 State.FrameStates[(int)DateTime.CurrentFrame].toStates(out SInputState.kState, out SInputState.mState);
             }
             // set flag to ensure input is pulled from state
-            SInputState.Active = realInputAdvance || storedInputAdvance;
+            SInputState.Active = realInputAdvance || gameLogicAdvance || storedInputAdvance;
             return SInputState.Active;
         }
 
@@ -80,21 +113,21 @@ namespace TAS
 
         private static bool HandleRealInput()
         {
-            RejectedKeys.Clear();
-            AddedKeys.Clear();
-            Mouse = null;
+            RejectedRealKeys.Clear();
+            AddedRealKeys.Clear();
+            RealMouse = null;
 
             // frame advance
             bool advance = false;
             if (RealInputState.KeyTriggered(Keys.Q))
             {
                 advance = true;
-                RejectedKeys.Add(Keys.Q);
+                RejectedRealKeys.Add(Keys.Q);
             }
             if (RealInputState.IsKeyDown(Keys.Space))
             {
                 advance = true;
-                RejectedKeys.Add(Keys.Space);
+                RejectedRealKeys.Add(Keys.Space);
             }
             // reset
             if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
@@ -115,6 +148,25 @@ namespace TAS
             if (RealInputState.KeyTriggered(Keys.OemComma))
                 State = SaveState.Load(State.Prefix);
             return advance;
+        }
+
+        private static bool HandleGameLogicInput()
+        {
+            AddedLogicKeys.Clear();
+            RejectedLogicKeys.Clear();
+            LogicMouse = null;
+            foreach(IGameLogic logic in GameLogics.Values)
+            {
+                if (logic.Update(out SKeyboardState keys, out SMouseState mouse))
+                {
+                    if (keys != null)
+                        AddedLogicKeys.UnionWith(keys);
+                    if (mouse != null)
+                        LogicMouse = mouse;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static bool HandleStoredInput()
@@ -150,6 +202,16 @@ namespace TAS
                     }
                 }
             }
+        }
+
+        public static SMouseState LastFrameMouse()
+        {
+            if (DateTime.CurrentFrame == 0)
+            {
+                return new SMouseState();
+            }
+            State.FrameStates[(int)DateTime.CurrentFrame - 1].toStates(out _, out SMouseState mouse);
+            return mouse;
         }
 
         public static void Reset()

@@ -39,7 +39,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] Player using tool
     - [ ] In dialogue box with prompt
 - [ ] Add basic updating logic
-    - [ ] auto animation cancel
+    - [X] auto animation cancel
     - [ ] auto screen fade advance
     - [ ] auto skip event advance
     - [ ] auto sleep advance
