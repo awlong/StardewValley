@@ -38,25 +38,7 @@ namespace TAS.Wrappers
                 // we updated the frame, make sure we can draw on next call
                 Counter++;
             }
-            else
-            {
-                // ensure the base Game.Update is called to prevent freezing
-                InvokeBase(gameTime);
-            }
             CanUpdate = false;
-        }
-
-        public static void InvokeBase(GameTime gameTime)
-        {
-            // TODO: Should this use the reflector logic?
-            var method = typeof(Game).GetMethod("Update", BindingFlags.NonPublic | BindingFlags.Instance);
-            var funcPtr = method.MethodHandle.GetFunctionPointer();
-            if (Game1.game1 != null)
-            {
-                // get the actual base function
-                var func = (Action<GameTime>)Activator.CreateInstance(typeof(Action<GameTime>), Game1.game1, funcPtr);
-                func(gameTime);
-            }
         }
     }
 }

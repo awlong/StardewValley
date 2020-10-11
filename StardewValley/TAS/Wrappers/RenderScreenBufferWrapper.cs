@@ -20,8 +20,8 @@ namespace TAS.Wrappers
         {
             if (screen != null)
             {
-                Game1.game1.GraphicsDevice.SetRenderTarget(null);
-                Game1.game1.GraphicsDevice.Clear(color);
+                Game1.GraphicsDevice.SetRenderTarget(null);
+                Game1.GraphicsDevice.Clear(color);
 
                 // TODO: should this change when we override SpriteBatch?
                 bool inBeginEndPair = (bool)Reflector.GetValue(Game1.spriteBatch, "inBeginEndPair");
@@ -43,7 +43,7 @@ namespace TAS.Wrappers
         {
             if(Game1.game1.takingMapScreenshot)
             {
-                Game1.game1.GraphicsDevice.SetRenderTarget(null);
+                Game1.GraphicsDevice.SetRenderTarget(null);
             }
             else
             {

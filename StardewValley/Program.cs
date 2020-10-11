@@ -1,6 +1,7 @@
 using StardewValley.SDKs;
 using System;
 using System.IO;
+using TAS;
 
 namespace StardewValley
 {
@@ -26,7 +27,7 @@ namespace StardewValley
 
 		private static SDKHelper _sdk;
 
-		public static Game1 gamePtr;
+		public static SGame gamePtr;
 
 		public static bool handlingException;
 
@@ -40,7 +41,8 @@ namespace StardewValley
 			{
 				if (_sdk == null)
 				{
-					_sdk = new SteamHelper();
+					// empty sdk
+					_sdk = new NullSDKHelper();
 				}
 				return _sdk;
 			}
@@ -50,12 +52,14 @@ namespace StardewValley
 		{
 			GameTesterMode = true;
 			AppDomain.CurrentDomain.UnhandledException += handleException;
-			using (Game1 game = new Game1())
+			using (SGame game = new SGame())
 			{
 				gamePtr = game;
 				game.Run();
 			}
 		}
+
+		
 
 		public static string WriteLog(LogType logType, string message, bool append = false)
 		{

@@ -455,11 +455,11 @@ namespace StardewValley
 			platformClampValues();
 			if (zoomLevel != appliedZoomLevel || lightingQuality != appliedLightingQuality)
 			{
-				Program.gamePtr.refreshWindowSettings();
+				Game1.game1.refreshWindowSettings();
 				appliedZoomLevel = zoomLevel;
 				appliedLightingQuality = lightingQuality;
 			}
-			Program.gamePtr.IsMouseVisible = hardwareCursor;
+			Game1.IsMouseVisible = hardwareCursor;
 		}
 
 		public void setToDefaults()
@@ -729,7 +729,7 @@ namespace StardewValley
 				break;
 			case 26:
 				hardwareCursor = value;
-				Program.gamePtr.IsMouseVisible = hardwareCursor;
+				Game1.IsMouseVisible = hardwareCursor;
 				break;
 			case 27:
 				showPlacementTileForGamepad = value;
@@ -805,7 +805,7 @@ namespace StardewValley
 				{
 					zoomLevel = (float)zoomlvl3 / 100f;
 					Game1.overrideGameMenuReset = true;
-					Program.gamePtr.refreshWindowSettings();
+					Game1.game1.refreshWindowSettings();
 					Game1.overrideGameMenuReset = false;
 					Game1.showGlobalMessage(Game1.content.LoadString("Strings\\StringsFromCSFiles:Options.cs.4563") + zoomLevel);
 				}
@@ -945,7 +945,7 @@ namespace StardewValley
 					fullscreen = true;
 					windowedBorderlessFullscreen = false;
 					hardwareCursor = false;
-					Program.gamePtr.IsMouseVisible = false;
+					Game1.IsMouseVisible = false;
 				}
 				whichMode = 2;
 				break;
@@ -999,7 +999,7 @@ namespace StardewValley
 					break;
 				}
 				Game1.overrideGameMenuReset = true;
-				Program.gamePtr.refreshWindowSettings();
+				Game1.game1.refreshWindowSettings();
 				Game1.overrideGameMenuReset = false;
 				break;
 			case 18:
@@ -1007,7 +1007,7 @@ namespace StardewValley
 				int newZoom = Convert.ToInt32(options[selection].Replace("%", ""));
 				zoomLevel = (float)newZoom / 100f;
 				Game1.overrideGameMenuReset = true;
-				Program.gamePtr.refreshWindowSettings();
+				Game1.game1.refreshWindowSettings();
 				Game1.overrideGameMenuReset = false;
 				if (Game1.debrisWeather != null)
 				{
@@ -1136,7 +1136,7 @@ namespace StardewValley
 				break;
 			case 4:
 			{
-				Form form = Control.FromHandle(Program.gamePtr.Window.Handle).FindForm();
+				Form form = Control.FromHandle(Game1.Window.Handle).FindForm();
 				windowedBorderlessFullscreen = (form.FormBorderStyle == FormBorderStyle.None);
 				fullscreen = (Game1.graphics.IsFullScreen || windowedBorderlessFullscreen);
 				checkbox.isChecked = fullscreen;
@@ -1820,7 +1820,7 @@ namespace StardewValley
 
 		public bool isCurrentlyWindowedBorderless()
 		{
-			Form form = Control.FromHandle(Program.gamePtr.Window.Handle).FindForm();
+			Form form = Control.FromHandle(Game1.Window.Handle).FindForm();
 			if (!Game1.graphics.IsFullScreen)
 			{
 				return form.FormBorderStyle == FormBorderStyle.None;

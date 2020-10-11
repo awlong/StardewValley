@@ -2329,7 +2329,7 @@ namespace StardewValley.Locations
 				}
 				int col = (getMineArea() == 0 || (isDarkArea() && getMineArea() != 121)) ? 4 : ((getMineArea() == 10) ? 6 : ((getMineArea() == 40) ? 7 : ((getMineArea() == 80) ? 2 : 3)));
 				string txt = string.Concat(mineLevel + ((getMineArea() == 121) ? (-120) : 0));
-				Microsoft.Xna.Framework.Rectangle tsarea = Game1.game1.GraphicsDevice.Viewport.GetTitleSafeArea();
+				Microsoft.Xna.Framework.Rectangle tsarea = Game1.GraphicsDevice.Viewport.GetTitleSafeArea();
 				SpriteText.drawString(b, txt, tsarea.Left + 16, tsarea.Top + 16, 999999, -1, 999999, 1f, 1f, junimoText: false, 2, "", col);
 			}
 		}

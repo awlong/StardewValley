@@ -666,8 +666,8 @@ namespace StardewValley
 
 		public static Microsoft.Xna.Framework.Rectangle getSafeArea()
 		{
-			Microsoft.Xna.Framework.Rectangle area = Game1.game1.GraphicsDevice.Viewport.GetTitleSafeArea();
-			if (Game1.game1.GraphicsDevice.GetRenderTargets().Length == 0)
+			Microsoft.Xna.Framework.Rectangle area = Game1.GraphicsDevice.Viewport.GetTitleSafeArea();
+			if (Game1.GraphicsDevice.GetRenderTargets().Length == 0)
 			{
 				area.X = (int)((float)area.X * (1f / Game1.options.zoomLevel));
 				area.Y = (int)((float)area.Y * (1f / Game1.options.zoomLevel));
@@ -733,7 +733,7 @@ namespace StardewValley
 
 		public static int makeSafeMarginX(int marginx)
 		{
-			Viewport vp = Game1.game1.GraphicsDevice.Viewport;
+			Viewport vp = Game1.GraphicsDevice.Viewport;
 			Microsoft.Xna.Framework.Rectangle area = getSafeArea();
 			if (area.Left > vp.Bounds.Left)
 			{
@@ -749,7 +749,7 @@ namespace StardewValley
 
 		public static int makeSafeMarginY(int marginy)
 		{
-			Viewport vp = Game1.game1.GraphicsDevice.Viewport;
+			Viewport vp = Game1.GraphicsDevice.Viewport;
 			Microsoft.Xna.Framework.Rectangle area = getSafeArea();
 			int j = area.Top - vp.Bounds.Top;
 			if (j > marginy)

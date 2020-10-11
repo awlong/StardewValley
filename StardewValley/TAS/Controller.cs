@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using TAS.Inputs;
 using TAS.Overlays;
+using TAS.Wrappers;
 using DateTime = StardewValley.DateTime;
 
 namespace TAS
@@ -23,6 +24,7 @@ namespace TAS
         private static SMouseState Mouse;
         private static HashSet<Keys> RejectedKeys;
         private static HashSet<Keys> AddedKeys;
+
         static Controller()
         {
 
@@ -41,13 +43,13 @@ namespace TAS
         {
             // get the actual input data loaded
             RealInputState.Update();
-            
+
             // check if prior state or current keyboard should advance
             bool storedInputAdvance = HandleStoredInput();
             bool realInputAdvance = HandleRealInput();
             // TODO: only call when a menu is up?
             HandleTextBoxEntry();
-
+            
             if (realInputAdvance && !storedInputAdvance)
             {
                 // add the new frame data
@@ -95,11 +97,12 @@ namespace TAS
                 RejectedKeys.Add(Keys.Space);
             }
             // exit
-            if (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets))
+            if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
+                (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))
             {
-                // improve this logic?
-                Game1.quit = true;
-                advance = true;
+                // it will move through 1 frame and then go into reset 
+                Program.gamePtr.KillGame1();
+                advance = false;
             }
             // save/load
             if (RealInputState.KeyTriggered(Keys.OemPeriod))
@@ -144,6 +147,13 @@ namespace TAS
             }
         }
 
-       
+        public static void Reset()
+        {
+            UpdateWrapper.Reset();
+            DrawWrapper.Reset();
+            SInputState.Reset();
+            RealInputState.Reset();
+            DateTime.Reset();
+        }
     }
 }

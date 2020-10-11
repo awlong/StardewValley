@@ -40,7 +40,7 @@ namespace StardewValley.Menus
 
 		private void updatePosition()
 		{
-			Rectangle tsarea = Game1.game1.GraphicsDevice.Viewport.GetTitleSafeArea();
+			Rectangle tsarea = Game1.GraphicsDevice.Viewport.GetTitleSafeArea();
 			int w = 288;
 			int h = 64;
 			int x = tsarea.Right - 320 - 32 - width;

@@ -55,8 +55,9 @@ namespace StardewValley
 			}
 		}
 
+		// NOTE: Fixing static constructor since Farm explicitly loads the textures
 		[XmlIgnore]
-		public static readonly Texture2D houseTextures = Game1.content.Load<Texture2D>("Buildings\\houses");
+		public static Texture2D houseTextures;
 
 		public const int default_layout = 0;
 
@@ -120,11 +121,17 @@ namespace StardewValley
 
 		public Farm()
 		{
+			// NOTE: Fixing static constructor since Farm explicitly loads the textures
+			if (Game1.content != null)
+				 houseTextures = Game1.content.Load<Texture2D>("Buildings\\houses");
 		}
 
 		public Farm(string mapPath, string name)
 			: base(mapPath, name)
 		{
+			// NOTE: Fixing static constructor since Farm explicitly loads the textures
+			if (Game1.content != null)
+				houseTextures = Game1.content.Load<Texture2D>("Buildings\\houses");
 			if (!Game1.IsMasterGame)
 			{
 				return;

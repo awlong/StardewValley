@@ -71,7 +71,7 @@ namespace StardewValley.Menus
 					zoom6 -= zoom6 % 5;
 					zoom6 += 5;
 					Game1.options.zoomLevel = Math.Min(1.25f, (float)zoom6 / 100f);
-					Program.gamePtr.refreshWindowSettings();
+					Game1.game1.refreshWindowSettings();
 					Game1.playSound("drumkit6");
 				}
 				else if (zoomOutButton.containsPoint(x, y) && Game1.options.zoomLevel > 0.75f)
@@ -80,7 +80,7 @@ namespace StardewValley.Menus
 					zoom3 -= zoom3 % 5;
 					zoom3 -= 5;
 					Game1.options.zoomLevel = Math.Max(0.75f, (float)zoom3 / 100f);
-					Program.gamePtr.refreshWindowSettings();
+					Game1.game1.refreshWindowSettings();
 					Game1.playSound("drumkit6");
 				}
 			}

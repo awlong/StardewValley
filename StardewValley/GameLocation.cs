@@ -761,7 +761,7 @@ namespace StardewValley
 		{
 			if (force_reload)
 			{
-				LocalizedContentManager loader = Program.gamePtr.CreateContentManager(Game1.content.ServiceProvider, Game1.content.RootDirectory);
+				LocalizedContentManager loader = Game1.game1.CreateContentManager(Game1.content.ServiceProvider, Game1.content.RootDirectory);
 				map = loader.Load<Map>(mapPath);
 				loader.Unload();
 			}

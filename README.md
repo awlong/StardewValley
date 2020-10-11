@@ -21,9 +21,11 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [X] Override DateTime.cs
     - [X] Keyboard shortcuts
     - [X] Override textbox entry (listens to different keyboard events than keypresses)
-- [ ] Get dirty restart working (from mid-run state)
-    - [ ] Override Program.cs to reload static constructors/clear variables
-    - [ ] Dump the current window and reload a new window (one of the benefits of being on Windows with XNA)
+- [X] Get dirty restart working (from mid-run state)
+    - [X] Create new intermediate SGame to handle XNA services (inherit from Microsoft.Xna.Framework.Game)
+    - [X] Decouple Game1 from Microsoft.Xna.Framework.Game
+    - [X] Setup static constructor/initializer reset system for things in StardewValley namespace
+    - [X] Configure Controller to trigger the reset
 - [ ] Get fast restart working
     - [ ] Override SpriteBatch.cs
 - [ ] Reimplement command console
