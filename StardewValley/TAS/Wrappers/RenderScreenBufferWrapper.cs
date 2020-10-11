@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using StardewValley;
+using System.Threading;
 
 namespace TAS.Wrappers
 {
@@ -23,8 +24,7 @@ namespace TAS.Wrappers
                 Game1.GraphicsDevice.SetRenderTarget(null);
                 Game1.GraphicsDevice.Clear(color);
 
-                // TODO: should this change when we override SpriteBatch?
-                bool inBeginEndPair = (bool)Reflector.GetValue(Game1.spriteBatch, "inBeginEndPair");
+                bool inBeginEndPair = Game1.spriteBatch.inBeginEndPair;
                 if (!inBeginEndPair)
                 {
                     Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);

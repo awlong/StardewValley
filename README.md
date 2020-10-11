@@ -12,7 +12,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
 - [X] Add generic Reflector class to maintain references to System.Reflection info/streamline metaprogramming
 - [X] Change Draw to write to a RenderTarget2D instead of implicit target (maintain screen when frozen)
 - [X] Handle keypress to advance 1 frame
-- [ ] Store input state on frame advance
+- [X] Store input state on frame advance
     - [X] Basic FrameState/StateList classes
     - [X] Push to/pull from StateList on frame advance
     - [X] Read/write StateList to file
@@ -26,8 +26,9 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [X] Decouple Game1 from Microsoft.Xna.Framework.Game
     - [X] Setup static constructor/initializer reset system for things in StardewValley namespace
     - [X] Configure Controller to trigger the reset
-- [ ] Get fast restart working
-    - [ ] Override SpriteBatch.cs
+- [X] Get fast restart working
+    - [X] Override SpriteBatch.cs
+    - [X] Loop Update/Draw up to some frame threshold from finished
 - [ ] Reimplement command console
     - [ ] toggle key to bring down overlay
     - [ ] take keyboard input to write text
@@ -39,7 +40,7 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] In dialogue box with prompt
 - [ ] Add basic updating logic
     - [ ] auto animation cancel
-    - [ ] auto screen fade avance
+    - [ ] auto screen fade advance
     - [ ] auto skip event advance
     - [ ] auto sleep advance
     - [ ] auto dialogue box (non-select)

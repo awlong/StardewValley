@@ -471,11 +471,17 @@ namespace StardewValley.Minigames
 			if (showResultsTimer < 0)
 			{
 				b.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-				Game1.mapDisplayDevice.BeginScene(b);
-				location.Map.GetLayer("Back").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
+				if (SpriteBatch.Active)
+				{
+					Game1.mapDisplayDevice.BeginScene(b.spriteBatch);
+					location.Map.GetLayer("Back").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
+				}
 				b.Draw(Game1.shadowTexture, Game1.GlobalToLocal(Game1.viewport, Game1.player.Position + new Vector2(32f, 24f)), Game1.shadowTexture.Bounds, Color.White, 0f, new Vector2(Game1.shadowTexture.Bounds.Center.X, Game1.shadowTexture.Bounds.Center.Y), 4f - ((Game1.player.running || Game1.player.UsingTool) ? ((float)Math.Abs(FarmerRenderer.featureYOffsetPerFrame[Game1.player.FarmerSprite.CurrentFrame]) * 0.8f) : 0f), SpriteEffects.None, Math.Max(0f, (float)Game1.player.getStandingY() / 10000f + 0.00011f) - 1E-07f);
-				location.Map.GetLayer("Buildings").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
-				Game1.mapDisplayDevice.EndScene();
+				if (SpriteBatch.Active)
+				{
+					location.Map.GetLayer("Buildings").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
+					Game1.mapDisplayDevice.EndScene();
+				}
 				b.End();
 				b.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
 				location.draw(b);
@@ -486,9 +492,12 @@ namespace StardewValley.Minigames
 				}
 				b.End();
 				b.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-				Game1.mapDisplayDevice.BeginScene(b);
-				location.Map.GetLayer("Front").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
-				Game1.mapDisplayDevice.EndScene();
+				if (SpriteBatch.Active)
+				{
+					Game1.mapDisplayDevice.BeginScene(b.spriteBatch);
+					location.Map.GetLayer("Front").Draw(Game1.mapDisplayDevice, Game1.viewport, Location.Origin, wrapAround: false, 4);
+					Game1.mapDisplayDevice.EndScene();
+				}
 				if (!Game1.options.hardwareCursor && !Game1.options.gamepadControls)
 				{
 					b.Draw(Game1.mouseCursors, new Vector2(Game1.getMouseX(), Game1.getMouseY()), Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16), Color.White, 0f, Vector2.Zero, 4f + Game1.dialogueButtonScale / 150f, SpriteEffects.None, 1f);

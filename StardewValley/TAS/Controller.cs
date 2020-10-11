@@ -96,12 +96,17 @@ namespace TAS
                 advance = true;
                 RejectedKeys.Add(Keys.Space);
             }
-            // exit
+            // reset
             if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
                 (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))
             {
                 // it will move through 1 frame and then go into reset 
                 Program.gamePtr.KillGame1();
+                advance = false;
+            }
+            if (RealInputState.KeyTriggered(Keys.Home))
+            {
+                Program.gamePtr.KillGame1(true);
                 advance = false;
             }
             // save/load
@@ -152,7 +157,6 @@ namespace TAS
             UpdateWrapper.Reset();
             DrawWrapper.Reset();
             SInputState.Reset();
-            RealInputState.Reset();
             DateTime.Reset();
         }
     }

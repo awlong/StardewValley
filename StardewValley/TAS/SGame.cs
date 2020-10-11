@@ -13,6 +13,9 @@ using System.Text;
 using System.Threading;
 using TAS.Wrappers;
 
+using SpriteBatch = StardewValley.SpriteBatch;
+using DateTime = StardewValley.DateTime;
+
 namespace TAS
 {
     public class SGame : Game
@@ -25,6 +28,8 @@ namespace TAS
         public static ISoundBank soundBank;
         public static KeyboardDispatcher keyboardDispatcher;
         public static bool ResetGame;
+        public static bool FastAdvance;
+        public static int ReplayNormalFrames = 30;
 
         public SGame()
         {
@@ -85,25 +90,49 @@ namespace TAS
                 ResetGame = false;
                 SetupGame1();
             }
+            if (FastAdvance)
+            {
+                FastAdvance = false;
+                RunFast();
+            }
 
+            UpdateGame(ref gameTime);
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            DrawGame(ref gameTime);
+            base.Draw(gameTime);
+        }
+
+        private void UpdateGame(ref GameTime gameTime)
+        {
             if (UpdateWrapper.Prefix(ref gameTime))
             {
                 game.Update(gameTime);
             }
             UpdateWrapper.Postfix(gameTime);
-
-            base.Update(gameTime);
         }
-
-        protected override void Draw(GameTime gameTime)
+        private void DrawGame(ref GameTime gameTime)
         {
             if (DrawWrapper.Prefix(ref gameTime))
             {
                 game?.Draw(gameTime);
             }
             DrawWrapper.Postfix(gameTime);
+        }
 
-            base.Draw(gameTime);
+        private void RunFast()
+        {
+            SpriteBatch.Active = false;
+            while ((int)DateTime.CurrentFrame + ReplayNormalFrames < Controller.State.Count)
+            {
+                GameTime gameTime = DateTime.CurrentGameTime;
+                UpdateGame(ref gameTime);
+                DrawGame(ref gameTime);
+            }
+            SpriteBatch.Active = true;
         }
 
         public void SetupGame1()
@@ -134,9 +163,10 @@ namespace TAS
             Process.GetCurrentProcess().Kill();
         }
 
-        public void KillGame1()
+        public void KillGame1(bool fastAdvance = false)
         {
             ResetGame = true;
+            FastAdvance = fastAdvance;
         }
     }
 }

@@ -43,8 +43,7 @@ namespace TAS.Wrappers
 
         public static void RedrawFrame(GameTime gameTime)
         {
-            // TODO: should this change when we override SpriteBatch?
-            bool inBeginEndPair = (bool)Reflector.GetValue(Game1.spriteBatch, "inBeginEndPair");
+            bool inBeginEndPair = Game1.spriteBatch.inBeginEndPair;
             if (!inBeginEndPair)
             {
                 Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);

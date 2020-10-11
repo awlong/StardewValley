@@ -14523,8 +14523,11 @@ namespace StardewValley
 				{
 					background.draw(spriteBatch);
 				}
-				mapDisplayDevice.BeginScene(spriteBatch);
-				currentLocation.Map.GetLayer("Back").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
+				if (SpriteBatch.Active)
+				{
+					mapDisplayDevice.BeginScene(spriteBatch.spriteBatch);
+					currentLocation.Map.GetLayer("Back").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
+				}
 				currentLocation.drawWater(spriteBatch);
 				_farmerShadows.Clear();
 				if (currentLocation.currentEvent != null && !currentLocation.currentEvent.isFestival && currentLocation.currentEvent.farmerActors.Count > 0)
@@ -14578,8 +14581,11 @@ namespace StardewValley
 					}
 				}
 				Layer building_layer = currentLocation.Map.GetLayer("Buildings");
-				building_layer.Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
-				mapDisplayDevice.EndScene();
+				if (SpriteBatch.Active)
+				{
+					building_layer.Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
+					mapDisplayDevice.EndScene();
+				}
 				spriteBatch.End();
 				spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
 				if (!currentLocation.shouldHideCharacters())
@@ -14656,9 +14662,12 @@ namespace StardewValley
 						spriteBatch.Draw(fadeToBlackRect, new Microsoft.Xna.Framework.Rectangle(w.X * 64 - viewport.X, w.Y * 64 - viewport.Y, 64, 64), Microsoft.Xna.Framework.Color.Red * 0.75f);
 					}
 				}
-				mapDisplayDevice.BeginScene(spriteBatch);
-				currentLocation.Map.GetLayer("Front").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
-				mapDisplayDevice.EndScene();
+				if (SpriteBatch.Active)
+				{
+					mapDisplayDevice.BeginScene(spriteBatch.spriteBatch);
+					currentLocation.Map.GetLayer("Front").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
+					mapDisplayDevice.EndScene();
+				}
 				currentLocation.drawAboveFrontLayer(spriteBatch);
 				spriteBatch.End();
 				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
@@ -14676,9 +14685,12 @@ namespace StardewValley
 				}
 				if (currentLocation.Map.GetLayer("AlwaysFront") != null)
 				{
-					mapDisplayDevice.BeginScene(spriteBatch);
-					currentLocation.Map.GetLayer("AlwaysFront").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
-					mapDisplayDevice.EndScene();
+					if (SpriteBatch.Active)
+					{
+						mapDisplayDevice.BeginScene(spriteBatch.spriteBatch);
+						currentLocation.Map.GetLayer("AlwaysFront").Draw(mapDisplayDevice, viewport, Location.Origin, wrapAround: false, 4);
+						mapDisplayDevice.EndScene();
+					}
 				}
 				if (toolHold > 400f && player.CurrentTool.UpgradeLevel >= 1 && player.canReleaseTool)
 				{

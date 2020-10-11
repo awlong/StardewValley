@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TAS.Overlays
 {
@@ -27,6 +22,6 @@ namespace TAS.Overlays
             }
         }
 
-        public virtual void DrawImpl(SpriteBatch spriteBatch) { }
+        public virtual void DrawImpl(StardewValley.SpriteBatch spriteBatch) { }
     }
 }

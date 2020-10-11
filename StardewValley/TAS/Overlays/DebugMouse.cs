@@ -1,11 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using StardewValley;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TAS.Overlays
 {
@@ -19,7 +15,7 @@ namespace TAS.Overlays
             Active = true;
         }
 
-        public override void DrawImpl(SpriteBatch spriteBatch)
+        public override void DrawImpl(StardewValley.SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();
             Vector2 coords = new Vector2(
