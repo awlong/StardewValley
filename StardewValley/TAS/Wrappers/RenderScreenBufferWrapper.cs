@@ -16,7 +16,7 @@ namespace TAS.Wrappers
             return false;
         }
 
-        private static Color color => Color.CornflowerBlue;
+        private static Color color = new Color(5, 3, 4);
         public static void Base(RenderTarget2D screen)
         {
             if (screen != null)

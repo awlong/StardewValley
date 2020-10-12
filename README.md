@@ -34,17 +34,16 @@ Tool Assisted Speedrun (TAS) Engine built ontop of veywrn's [Decompiled Stardew 
     - [ ] take keyboard input to write text
     - [ ] run command based on input text
     - [ ] function where code can launch the console/write to log
-- [ ] Add basic state detection code
-    - [ ] Player can move
-    - [ ] Player using tool
-    - [ ] In dialogue box with prompt
-- [ ] Add basic updating logic
+- [X] Add basic state detection code
+    - wrap only the info I need from the global/current game objects
+- [X] Add basic updating logic
     - [X] auto animation cancel
-    - [ ] auto screen fade advance
-    - [ ] auto skip event advance
-    - [ ] auto sleep advance
-    - [ ] auto dialogue box (non-select)
-
+    - [X] auto screen fade advance
+    - [X] auto skip event advance
+    - [X] auto advance when player can't move
+    - [X] auto sleep (handling dialogue box/animations)
+    - [X] auto dialogue box (non-select)
+    - [X] auto save game advance
 More generic things to consider
 
 - json output gets somewhat large compared to old custom serialization 

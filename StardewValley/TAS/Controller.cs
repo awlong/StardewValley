@@ -129,24 +129,32 @@ namespace TAS
                 advance = true;
                 RejectedRealKeys.Add(Keys.Space);
             }
-            // reset
+            
+            // quit
             if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
                 (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))
             {
-                // it will move through 1 frame and then go into reset 
-                Program.gamePtr.KillGame1();
-                advance = false;
+                Program.gamePtr.Exit();
             }
+
+            // reset
             if (RealInputState.KeyTriggered(Keys.Home))
             {
                 Program.gamePtr.KillGame1(true);
                 advance = false;
             }
+            if (RealInputState.KeyTriggered(Keys.End))
+            {
+                Program.gamePtr.KillGame1(false);
+                advance = false;
+            }
+
             // save/load
             if (RealInputState.KeyTriggered(Keys.OemPeriod))
                 State.Save();
             if (RealInputState.KeyTriggered(Keys.OemComma))
                 State = SaveState.Load(State.Prefix);
+
             return advance;
         }
 
