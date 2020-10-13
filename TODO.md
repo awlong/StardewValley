@@ -18,8 +18,9 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] Sleep details
     - [ ] Info panels
 - [ ] Reimplement command console
-    - [ ] toggle key to bring down window
-    - [ ] take keyboard input to write text
+    - [X] toggle key to bring down window
+    - [X] take keyboard input to write text
+    - [X] simple scrolling/history and inline ctrl+left/right to move between tokens
     - [ ] run command based on input text
     - [ ] function where code can launch the console/write to log
 
