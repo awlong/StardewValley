@@ -99,6 +99,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(SolutionDir)Content&quot; &quot;$(TargetDir)Content&quot;  /S /Y /E /D /I" />
+    <Exec Command="xcopy &quot;$(SolutionDir)Content&quot; &quot;$(TargetDir)Content&quot;  /S /Y /E /D /I&#xD;&#xA;xcopy &quot;$(SolutionDir)Fonts&quot; &quot;$(TargetDir)Content\Fonts&quot;  /S /Y /E /D /I" />
   </Target>
 </Project>

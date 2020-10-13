@@ -119,42 +119,44 @@ namespace TAS
 
             // frame advance
             bool advance = false;
-            if (RealInputState.KeyTriggered(Keys.Q))
+            if (!SGame.console.IsOpen)
             {
-                advance = true;
-                RejectedRealKeys.Add(Keys.Q);
-            }
-            if (RealInputState.IsKeyDown(Keys.Space))
-            {
-                advance = true;
-                RejectedRealKeys.Add(Keys.Space);
-            }
-            
-            // quit
-            if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
-                (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))
-            {
-                Program.gamePtr.Exit();
-            }
+                if (RealInputState.KeyTriggered(Keys.Q))
+                {
+                    advance = true;
+                    RejectedRealKeys.Add(Keys.Q);
+                }
+                if (RealInputState.IsKeyDown(Keys.Space))
+                {
+                    advance = true;
+                    RejectedRealKeys.Add(Keys.Space);
+                }
 
-            // reset
-            if (RealInputState.KeyTriggered(Keys.Home))
-            {
-                Program.gamePtr.KillGame1(true);
-                advance = false;
-            }
-            if (RealInputState.KeyTriggered(Keys.End))
-            {
-                Program.gamePtr.KillGame1(false);
-                advance = false;
-            }
+                // quit
+                if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
+                    (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))
+                {
+                    Program.gamePtr.Exit();
+                }
 
-            // save/load
-            if (RealInputState.KeyTriggered(Keys.OemPeriod))
-                State.Save();
-            if (RealInputState.KeyTriggered(Keys.OemComma))
-                State = SaveState.Load(State.Prefix);
+                // reset
+                if (RealInputState.KeyTriggered(Keys.Home))
+                {
+                    Program.gamePtr.KillGame1(true);
+                    advance = false;
+                }
+                if (RealInputState.KeyTriggered(Keys.End))
+                {
+                    Program.gamePtr.KillGame1(false);
+                    advance = false;
+                }
 
+                // save/load
+                if (RealInputState.KeyTriggered(Keys.OemPeriod))
+                    State.Save();
+                if (RealInputState.KeyTriggered(Keys.OemComma))
+                    State = SaveState.Load(State.Prefix);
+            }
             return advance;
         }
 

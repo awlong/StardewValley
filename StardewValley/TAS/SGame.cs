@@ -30,6 +30,8 @@ namespace TAS
         public static bool ResetGame;
         public static bool FastAdvance;
         public static int ReplayNormalFrames = 30;
+        public static CommandConsole console;
+        public static LocalizedContentManager content;
 
         public SGame()
         {
@@ -74,6 +76,9 @@ namespace TAS
             base.Initialize();
             graphics.SynchronizeWithVerticalRetrace = true;
             Program.sdk.Initialize();
+
+            content = new LocalizedContentManager(base.Content.ServiceProvider, base.Content.RootDirectory);
+            console = new CommandConsole();
         }
 
         protected override void OnActivated(object sender, EventArgs args)
@@ -85,6 +90,7 @@ namespace TAS
 
         protected override void Update(GameTime gameTime)
         {
+            console.Update();
             if(game == null || ResetGame)
             {
                 ResetGame = false;
@@ -103,6 +109,7 @@ namespace TAS
         protected override void Draw(GameTime gameTime)
         {
             DrawGame(ref gameTime);
+            console.Draw();
             base.Draw(gameTime);
         }
 

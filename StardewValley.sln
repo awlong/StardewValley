@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82B8BAF5-8865-4442-A039-877EFDDA5CBA}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		Fonts\ConsoleFont.xnb = Fonts\ConsoleFont.xnb
 		TODO.md = TODO.md
 	EndProjectSection
 EndProject
