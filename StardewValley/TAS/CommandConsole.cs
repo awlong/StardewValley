@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using TAS.Commands;
 using TAS.Inputs;
+using TAS.Wrappers;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace TAS
@@ -18,7 +20,7 @@ namespace TAS
         {
             public bool entry;
             public string text;
-            public TextElement(string _text, bool _entry) 
+            public TextElement(string _text, bool _entry)
             {
                 text = _text;
                 entry = _entry;
@@ -54,6 +56,9 @@ namespace TAS
         private string entryText = "";
         private int cursorPosition;
 
+        public Dictionary<string, ICommand> Commands;
+        public HashSet<string> ActiveSubscribers = new HashSet<string>();
+
         public CommandConsole()
         {
             historyLog = new List<TextElement>();
@@ -64,9 +69,19 @@ namespace TAS
 
             spriteBatch = new SpriteBatch(SGame.graphics.GraphicsDevice);
             KeyboardInput.CharEntered += EventInput_CharEntered;
+
+            Commands = new Dictionary<string, ICommand>();
+            foreach (var v in Reflector.GetTypesInNamespace(ResetWrapper.ExecutingAssembly, "TAS.Commands"))
+            {
+                if (v.IsAbstract || v.BaseType != typeof(ICommand))
+                    continue;
+                ICommand command = (ICommand)Activator.CreateInstance(v);
+                Commands.Add(command.Name, command);
+                Debug.WriteLine("Command \"{0}\" added to commands list", command.Name);
+            }
         }
 
-        
+
 
 
         public bool IsOpen => openHeight > 0;
@@ -176,10 +191,12 @@ namespace TAS
                 Vector2 historyLoc = new Vector2(leftPad, historyRect.Height - 1.25f * consoleFont.LineSpacing);
                 spriteBatch.Draw(solidColor, historyRect, null, backgroundHistoryColor, 0, Vector2.Zero, SpriteEffects.None, 0);
                 int index = historyTail - 1;
-                while(historyLoc.Y+consoleFont.LineSpacing > 0 && index >= 0)
+                while (historyLoc.Y + consoleFont.LineSpacing > 0 && index >= 0)
                 {
+                    string text = historyLog[index].text;
+                    text = text.Replace("\t", "    ");
                     spriteBatch.DrawString(consoleFont,
-                        historyLog[index].text,
+                        text,
                         historyLoc,
                         historyLog[index].entry ? textEntryColor : textHistoryColor,
                         0f, Vector2.Zero, fontSize, SpriteEffects.None, 0.999999f
@@ -219,7 +236,7 @@ namespace TAS
                 cursorPosition = entryText.Length;
                 return;
             }
-            while(--historyIndex >= 0 && historyLog.Count != 0)
+            while (--historyIndex >= 0 && historyLog.Count != 0)
             {
                 if (historyLog[historyIndex].entry)
                 {
@@ -233,7 +250,7 @@ namespace TAS
         }
         private void ForwardHistory()
         {
-            while(++historyIndex < historyLog.Count)
+            while (++historyIndex < historyLog.Count)
             {
                 if (historyLog[historyIndex].entry)
                 {
@@ -279,7 +296,7 @@ namespace TAS
                     break;
                 case '\r':
                     // return
-                    pushCommand(entryText);
+                    PushCommand(entryText);
                     ResetEntry();
                     ResetHistoryPointers();
                     Debug.WriteLine("Pressed Command Key RETURN: {0}", command);
@@ -293,7 +310,7 @@ namespace TAS
             }
         }
 
-        
+
         private void ReceiveTextInput(char character)
         {
             switch (character)
@@ -310,12 +327,46 @@ namespace TAS
             }
         }
 
-        public void pushCommand(string command)
+        public bool HandleSubscribers(string command)
         {
+            // will I ever need multiple active subscribers?!
+            if (ActiveSubscribers.Count > 0)
+            {
+                string[] subscribers = ActiveSubscribers.ToArray();
+                foreach (string name in subscribers)
+                {
+                    Commands[name].ReceiveInput(command);
+                }
+                return true;
+            }
+            return false;
+        }
+        public void PushCommand(string command)
+        {
+            if (HandleSubscribers(command))
+                return;
+
             if (command != "")
             {
                 historyLog.Add(new TextElement(command, true));
+                RunCommand(command);
             }
         }
+        public void PushResult(string result)
+        {
+            historyLog.Add(new TextElement(result, false));
+        }
+        public void RunCommand(string command)
+        {
+            string[] tokens = command.Trim().Split(' ');
+            string func = tokens[0];
+            string[] parameters = tokens.Skip(1).ToArray();
+
+            if (Commands.ContainsKey(func))
+            {
+                Commands[func].Run(parameters);
+            }
+        }
+
     }
 }

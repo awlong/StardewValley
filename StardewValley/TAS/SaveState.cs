@@ -21,6 +21,8 @@ namespace TAS
         [JsonProperty]
         public string Prefix = "tmp";
         [JsonProperty]
+        public int Seed = 0;
+        [JsonProperty]
         public StateList FrameStates = new StateList();
 
         public SaveState()
@@ -33,6 +35,14 @@ namespace TAS
             }
         }
 
+        public SaveState(string farmerName, string farmName, string favoriteThing, int seed)
+        {
+            FarmerName = farmerName;
+            FarmName = farmName;
+            FavoriteThing = favoriteThing;
+            Seed = seed;
+            Prefix = string.Format("{0}_{1}", farmerName, seed);
+        }
         public SaveState(StateList states) : base()
         {
             FrameStates.AddRange(states);
@@ -91,5 +101,22 @@ namespace TAS
             }
             return state;
         }
+
+        public static void ChangeSaveStatePrefix(string filePath, string newPrefix)
+        {
+            SaveState state = null;
+            if (File.Exists(filePath))
+            {
+                using (StreamReader file = File.OpenText(filePath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    // TODO: any safety rails for overwriting current State?
+                    state = (SaveState)serializer.Deserialize(file, typeof(SaveState));
+                }
+                state.Prefix = newPrefix;
+                state.Save();
+            }
+        }
+
     }
 }

@@ -17,12 +17,35 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] Mixed Seed planting
     - [ ] Sleep details
     - [ ] Info panels
-- [ ] Reimplement command console
-    - [X] toggle key to bring down window
-    - [X] take keyboard input to write text
-    - [X] simple scrolling/history and inline ctrl+left/right to move between tokens
-    - [ ] run command based on input text
-    - [ ] function where code can launch the console/write to log
+- [ ] Commands via console
+    - [X] Basic filesystem commands
+    - [X] Create new SaveState
+    - [ ] Get current frame
+    - [ ] Peek the next set of random numbers
+    - [ ] Get details on SaveState
+    - [ ] Advance frame (or multiple)
+    - [ ] Advance to next second
+    - [ ] Reset to frame (including FastAdvance)
+    - [ ] Save/Load input file (including FastAdvance)
+    - [ ] Quit
+    - [ ] Toggle IOverlay
+    - [ ] Toggle IGameLogic
+    - [ ] List Forage in named zone (or current zone)
+    - [ ] List Friendships
+    - [ ] List MineContainers
+    - [ ] List Player Details (pos, luck, steps, ene, hp, xp, animation)
+    - [ ] List TrashCans
+- Automation logic
+    - [ ] Minimum time path to tile
+        - [ ] Code to find the path (copy)
+        - [ ] Overlay to draw the path
+        - [ ] GameLogic to advance along the path
+        - [ ] Commands to find the path and advance either the next stage or all steps
+- [ ] DOCUMENTATION
+    - [ ] getting started for code build
+    - [ ] getting started with the tas interface
+    - [X] ingame help (method in place for commands)
+
 
 ## Completed
 
@@ -61,6 +84,15 @@ This will be continuously added to, I should have probably used github projects 
     - [X] auto sleep (handling dialogue box/animations)
     - [X] auto dialogue box (non-select)
     - [X] auto save game advance
+- [X] Reimplement command console
+    - [X] toggle key to bring down window
+    - [X] take keyboard input to write text
+    - [X] simple scrolling/history and inline ctrl+left/right to move between tokens
+    - [X] bundled monospace font as an xnb
+    - [X] run command based on input text
+    - [X] write to log/entry from outside function
+    - [X] handle subscribing to current console input (sub/unsub)
+    - [X] function where code can open/close the console
 
 ## Things to consider later
 
@@ -70,3 +102,6 @@ Space size of input files isn't small... :man_shrugging:
     - current: ~1MB/4500f or 48MB/hr of playback currently with just inputs
     - previously: 130MB/hr but I stored a complete reconstruction of the RNG seed (~570 bytes/frame, basically 120MB/hr)
     - not sure this actually matters right now, the current method is super legible (could store RNG and be at <200MB/hr which seems fine).
+
+
+NOTE: To create a working xnb font on PC, I needed a Mac. I used the monogame pipeline creator to bundle a ttf spritefont into an xnb, then unpacked and converted the Monogame.Framwork links to the correct Microsoft.XNA libs that corresponded.

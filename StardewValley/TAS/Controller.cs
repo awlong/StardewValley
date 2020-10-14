@@ -226,6 +226,7 @@ namespace TAS
 
         public static void Reset()
         {
+            DateTime.setUniqueIDForThisGame((ulong)State.Seed);
             UpdateWrapper.Reset();
             DrawWrapper.Reset();
             SInputState.Reset();
