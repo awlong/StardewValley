@@ -126,6 +126,11 @@ namespace TAS
                     advance = true;
                     RejectedRealKeys.Add(Keys.Q);
                 }
+                if (RealInputState.KeyTriggered(Keys.Down))
+                {
+                    advance = true;
+                    RejectedRealKeys.Add(Keys.Down);
+                }
                 if (RealInputState.IsKeyDown(Keys.Space))
                 {
                     advance = true;

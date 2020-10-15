@@ -12,7 +12,7 @@ namespace TAS.GameState
         public static bool CanMove { get { return Game1.player.CanMove; } }
         public static bool UsingTool { get { return Game1.player.UsingTool; } }
         public static Tool CurrentTool { get { return Game1.player?.CurrentTool; } }
-        public static string CurrentAnimationBehavior
+        public static string CurrentAnimationStartBehavior
         {
             get
             {
@@ -26,9 +26,28 @@ namespace TAS.GameState
                         {
                             behavior = Game1.player.FarmerSprite.CurrentAnimation[animIndex].frameStartBehavior.Method.Name;
                         }
-                        else if (Game1.player.FarmerSprite.CurrentAnimation[animIndex].frameEndBehavior != null)
+                        else if (!CanMove)
                         {
-                            behavior = Game1.player.FarmerSprite.CurrentAnimation[animIndex].frameEndBehavior.Method.Name;
+                            behavior = "frozen";
+                        }
+                    }
+                }
+                return behavior;
+            }
+        }
+        public static string LastAnimationEndBehavior
+        {
+            get
+            {
+                string behavior = null;
+                if (Game1.player != null && Game1.player.FarmerSprite != null)
+                {
+                    int animIndex = Game1.player.FarmerSprite.currentAnimationIndex;
+                    if (animIndex < Game1.player.FarmerSprite.CurrentAnimation.Count && animIndex > 0)
+                    {
+                        if (Game1.player.FarmerSprite.CurrentAnimation[animIndex-1].frameEndBehavior != null)
+                        {
+                            behavior = Game1.player.FarmerSprite.CurrentAnimation[animIndex-1].frameEndBehavior.Method.Name;
                         }
                         else if (!CanMove)
                         {

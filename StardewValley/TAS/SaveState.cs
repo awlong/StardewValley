@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,18 @@ namespace TAS
         public string FavoriteThing = "abc";
         [JsonProperty]
         public string Prefix = "tmp";
+        [JsonProperty, JsonConverter(typeof(StringEnumConverter))]
+        public LocalizedContentManager.LanguageCode Language = LocalizedContentManager.LanguageCode.en;
         [JsonProperty]
         public int Seed = 0;
         [JsonProperty]
         public StateList FrameStates = new StateList();
+        [JsonProperty]
+        public Dictionary<string, bool> LogicStates = new Dictionary<string, bool>();
 
         public SaveState()
         {
+            StoreGameDetails();
             if (Game1.player != null)
             {
                 FarmerName = Game1.player.Name;
@@ -35,8 +41,10 @@ namespace TAS
             }
         }
 
-        public SaveState(string farmerName, string farmName, string favoriteThing, int seed)
+        public SaveState(string farmerName, string farmName, string favoriteThing, int seed, LocalizedContentManager.LanguageCode lang)
         {
+            LocalizedContentManager.CurrentLanguageCode = lang;
+            StoreGameDetails();
             FarmerName = farmerName;
             FarmName = farmName;
             FavoriteThing = favoriteThing;
@@ -69,7 +77,28 @@ namespace TAS
                 return FrameStates.Count;
             }
         }
+        public void StoreGameDetails()
+        {
+            Language = LocalizedContentManager.CurrentLanguageCode;
+            foreach (var logicPair in Controller.GameLogics)
+            {
+                if (!LogicStates.ContainsKey(logicPair.Key))
+                    LogicStates.Add(logicPair.Key, logicPair.Value.Active);
+                else
+                    LogicStates[logicPair.Key] = logicPair.Value.Active;
+            }
+        }
 
+        public void RestoreGameDetails()
+        {
+            LocalizedContentManager.CurrentLanguageCode = Language;
+            foreach (var logicPair in LogicStates)
+            {
+                if (Controller.GameLogics.ContainsKey(logicPair.Key))
+                    Controller.GameLogics[logicPair.Key].Active = logicPair.Value;
+            }
+        }
+        
         public static string PathFromPrefix(string prefix)
         {
             return Path.Combine(Constants.SaveStatePath, prefix + ".json");
@@ -77,6 +106,7 @@ namespace TAS
 
         public void Save()
         {
+            StoreGameDetails();
             using (StreamWriter file = File.CreateText(FilePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -98,6 +128,7 @@ namespace TAS
                     state = (SaveState)serializer.Deserialize(file, typeof(SaveState));
                     Debug.WriteLine(state.ToString());
                 }
+                state.RestoreGameDetails();
             }
             return state;
         }

@@ -24,7 +24,9 @@ namespace TAS.GameLogic
             if (CurrentMenu.Active || CurrentEvent.Active)
                 return false;
 
-            string behavior = Player.CurrentAnimationBehavior;
+            string behavior = Player.LastAnimationEndBehavior; 
+            if (behavior == null)
+                behavior = Player.CurrentAnimationStartBehavior;
             if (behavior != null)
             {
                 if (ValidStrings.Contains(behavior))

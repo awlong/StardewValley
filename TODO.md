@@ -61,6 +61,8 @@ This will be continuously added to, I should have probably used github projects 
     - [X] Basic FrameState/StateList classes
     - [X] Push to/pull from StateList on frame advance
     - [X] Read/write StateList to file
+    - [X] Store active logic toggles
+    - [X] Store language code
 - [X] Get clean restart working (from program launch)
     - [X] Override Random.cs
     - [X] Override DateTime.cs

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StardewValley;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
@@ -13,6 +14,7 @@ namespace TAS.Commands
         public string DefaultFarmerName = "TAS";
         public string DefaultFarmName = "TAS Farms";
         public string DefaultFavoriteThing = "Going Fast";
+        public LocalizedContentManager.LanguageCode DefaultLanguage = LocalizedContentManager.LanguageCode.en;
         public int DefaultSeed = 0;
 
         public enum Stage
@@ -21,12 +23,14 @@ namespace TAS.Commands
             Farm,
             Favorite,
             Seed,
+            Language,
             Done
         };
         public Stage CurrentStage;
         public string FarmerName;
         public string FarmName;
         public string FavoriteThing;
+        public LocalizedContentManager.LanguageCode Language;
         public int Seed;
 
         public override void Run(string[] tokens)
@@ -56,9 +60,11 @@ namespace TAS.Commands
                     return string.Format("Enter Favorite Thing (default: {0}):", DefaultFavoriteThing);
                 case Stage.Seed:
                     return string.Format("Enter Game Seed (default: {0}):", DefaultSeed);
+                case Stage.Language:
+                    return string.Format("Enter Language Code (options: [en,ja,ru,zh,pt,es,de,th,fr,ko,it,tr,hu]) (default: {0}):", DefaultLanguage);                        
                 case Stage.Done:
                     Unsubscribe();
-                    Write(string.Format("{0} | {1} | {2} | {3}", FarmerName, FarmName, FavoriteThing, Seed));
+                    Write("{0} | {1} | {2} | {3} | {4}", FarmerName, FarmName, FavoriteThing, Language, Seed);
                     CreateState();
                     return string.Format("New input created: {0}", Controller.State.Prefix);
                 default:
@@ -68,7 +74,7 @@ namespace TAS.Commands
 
         private void CreateState()
         {
-            Controller.State = new SaveState(FarmerName, FarmName, FavoriteThing, Seed);
+            Controller.State = new SaveState(FarmerName, FarmName, FavoriteThing, Seed, Language);
             SGame.ResetGame = true;
             Controller.State.Save();
 
@@ -111,7 +117,23 @@ namespace TAS.Commands
                     }
                     else
                     {
-                        Write(string.Format("Seed {0} cannot be cast to integer type, please try again", input));
+                        Write("Seed {0} cannot be cast to integer type, please try again", input);
+                    }
+                    break;
+                case Stage.Language:
+                    if (value == "")
+                    {
+                        Language = DefaultLanguage;
+                        CurrentStage++;
+                    } 
+                    else if (Enum.TryParse(value, out LocalizedContentManager.LanguageCode lang))
+                    {
+                        Language = lang;
+                        CurrentStage++;
+                    } 
+                    else
+                    {
+                        Write("Language {0} not valid, (options: [en,ja,ru,zh,pt,es,de,th,fr,ko,it,tr,hu]) (default: {1})", value, DefaultLanguage);
                     }
                     break;
                 default:

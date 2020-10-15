@@ -292,14 +292,12 @@ namespace TAS
                         }
                         cursorPosition = Math.Max(0, cursorPosition - 1);
                     }
-                    Debug.WriteLine("Pressed Command Key BACKSPACE: {0}", command);
                     break;
                 case '\r':
                     // return
                     PushCommand(entryText);
                     ResetEntry();
                     ResetHistoryPointers();
-                    Debug.WriteLine("Pressed Command Key RETURN: {0}", command);
                     break;
                 case '\t':
                     Debug.WriteLine("Pressed Command Key TAB: {0}", command);
@@ -322,7 +320,6 @@ namespace TAS
                 default:
                     entryText = entryText.Insert(cursorPosition++, character.ToString());
                     ResetHistoryPointers();
-                    Debug.WriteLine("Pressed Text Key: {0}", character);
                     break;
             }
         }

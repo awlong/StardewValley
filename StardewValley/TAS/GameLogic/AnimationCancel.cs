@@ -19,7 +19,9 @@ namespace TAS.GameLogic
 
             // we're now in a tool use scenario, check for the right frame
             kstate = new SKeyboardState();
-            string behavior = Player.CurrentAnimationBehavior;
+            string behavior = Player.LastAnimationEndBehavior;
+            if (behavior == null || !behavior.Equals("useTool"))
+                behavior = Player.CurrentAnimationStartBehavior;
             if (behavior != null && behavior.Equals("useTool"))
             {
                 kstate.Add(Keys.RightShift);
