@@ -162,6 +162,7 @@ namespace TAS
             Game1.Window = base.Window;
 
             game = new Game1();
+            LocalizedContentManager.CurrentLanguageCode = Controller.State.Language;
         }
 
         protected override void OnExiting(object sender, EventArgs args)

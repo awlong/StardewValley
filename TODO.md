@@ -22,12 +22,12 @@ This will be continuously added to, I should have probably used github projects 
     - [X] Create new SaveState
     - [ ] Get current frame
     - [ ] Peek the next set of random numbers
-    - [ ] Get details on SaveState
+    - [X] Get details on SaveState
     - [ ] Advance frame (or multiple)
     - [ ] Advance to next second
     - [ ] Reset to frame (including FastAdvance)
-    - [ ] Save/Load input file (including FastAdvance)
-    - [ ] Quit
+    - [X] Save/Load input file (including FastAdvance)
+    - [X] Quit
     - [ ] Toggle IOverlay
     - [ ] Toggle IGameLogic
     - [ ] List Forage in named zone (or current zone)

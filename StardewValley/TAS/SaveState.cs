@@ -58,7 +58,7 @@ namespace TAS
 
         public override string ToString()
         {
-            return string.Format("{0}:{1}:{2} Frames:{3}", FarmerName, FarmName, FavoriteThing, Count);
+            return string.Format("FarmerName:{0}|FarmName:{1}|FavoriteThing:{2}|Prefix:{3}|#Frames:{4}", FarmerName, FarmName, FavoriteThing, Prefix, Count);
         }
 
         public string FilePath
