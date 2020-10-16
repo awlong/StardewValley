@@ -23,9 +23,9 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] Get current frame
     - [ ] Peek the next set of random numbers
     - [X] Get details on SaveState
-    - [ ] Advance frame (or multiple)
-    - [ ] Advance to next second
-    - [ ] Reset to frame (including FastAdvance)
+    - [X] Advance frame (or multiple)
+    - [X] Advance to next second
+    - [X] Reset to frame (including FastAdvance)
     - [X] Save/Load input file (including FastAdvance)
     - [X] Quit
     - [X] Toggle IOverlay

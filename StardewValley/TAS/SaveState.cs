@@ -149,5 +149,14 @@ namespace TAS
             }
         }
 
+        public void Reset(int resetTo)
+        {
+            if (resetTo < 0)
+                resetTo = FrameStates.Count + 1 + resetTo;
+            resetTo = Math.Min(resetTo, FrameStates.Count);
+
+            while (Count > resetTo)
+                FrameStates.Pop();
+        }
     }
 }

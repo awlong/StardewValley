@@ -32,9 +32,6 @@ namespace TAS.Commands
         }
         public virtual string[] ParseToken(string token) { return null; }
 
-        public virtual string[] HelpText()
-        {
-            return new string[] { string.Format(" \"{0}\": no help documentation", Name) };
-        }
+        public abstract string[] HelpText();
     }
 }

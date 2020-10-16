@@ -10,10 +10,11 @@ namespace TAS.GameLogic
     {
         public abstract string Name { get; }
         public bool Active = true;
-
+        public bool Toggleable = true;
         public bool Toggle()
         {
-            Active = !Active;
+            if (Toggleable)
+                Active = !Active;
             return Active;
         }
 
@@ -26,16 +27,18 @@ namespace TAS.GameLogic
             return false;
         }
 
-        public virtual bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate) 
-        {
-            kstate = null;
-            mstate = null;
-            return false;
-        }
+        public abstract bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate);
 
-        public virtual string[] HelpText()
+        public abstract string[] HelpText();
+
+        public void Write(string line) { SGame.console.PushResult(line); }
+        public void Write(string format, params object[] args) { Write(string.Format(format, args)); }
+        public void Write(string[] lines)
         {
-            return new string[] { string.Format(" \"{0}\": no help documentation", Name) };
+            foreach (var line in lines)
+            {
+                Write(line);
+            }
         }
     }
 }

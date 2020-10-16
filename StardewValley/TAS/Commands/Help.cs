@@ -40,8 +40,11 @@ namespace TAS.Commands
             }
             if (Controller.GameLogics.ContainsKey(token))
             {
-                lines.Add(string.Format("GameLogic: {0}", token));
-                lines.AddRange(Controller.GameLogics[token].HelpText());
+                if (Controller.GameLogics[token].Toggleable)
+                {
+                    lines.Add(string.Format("GameLogic: {0}", token));
+                    lines.AddRange(Controller.GameLogics[token].HelpText());
+                }
             }
 
             if (lines.Count > 0)
@@ -76,7 +79,7 @@ namespace TAS.Commands
                     break;
                 case "logic":
                 case "l":
-                    ListKeys("GameLogics", Controller.GameLogics.Keys);
+                    ListKeys("GameLogics", Controller.GameLogics.Keys.Where((n) => Controller.GameLogics[n].Toggleable));
                     break;
                 case "commands":
                 case "comm":

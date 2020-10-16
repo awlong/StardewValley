@@ -24,9 +24,6 @@ namespace TAS.Overlays
 
         public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
 
-        public virtual string[] HelpText()
-        {
-            return new string[] { string.Format(" \"{0}\": no help documentation", Name) };
-        }
+        public abstract string[] HelpText();
     }
 }

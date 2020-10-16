@@ -18,7 +18,8 @@ namespace TAS.Commands
             {
                 foreach(IGameLogic logic in Controller.GameLogics.Values)
                 {
-                    Write("{0}: {1}", logic.Name, logic.Active);
+                    if (logic.Toggleable)
+                        Write("{0}: {1}", logic.Name, logic.Active);
                 }
                 return;
             }
@@ -51,7 +52,7 @@ namespace TAS.Commands
 
         private void Toggle(string name, string state)
         {
-            if (Controller.GameLogics.ContainsKey(name))
+            if (Controller.GameLogics.ContainsKey(name) && Controller.GameLogics[name].Toggleable)
             {
                 switch (state.ToLower())
                 {

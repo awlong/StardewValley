@@ -116,5 +116,13 @@ namespace StardewValley
                 return (int)TimeOfDay.TotalMilliseconds;
             }
         }
+
+        public static int FramesToNextSecond
+        {
+            get
+            {
+                return (int)(60 - (CurrentFrame % 60));
+            }
+        }
     }
 }
