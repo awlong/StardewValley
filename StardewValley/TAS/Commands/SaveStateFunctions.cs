@@ -27,6 +27,11 @@ namespace TAS.Commands
             SGame.ResetGame = true;
             Write("Loaded {0} ({1} frames)", tokens[0], Controller.State.Count);
         }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: load a save state and reset", Name) };
+        }
     }
 
     public class FastLoadSaveState : ICommand
@@ -52,6 +57,11 @@ namespace TAS.Commands
             SGame.FastAdvance = true;
             Write("Loaded {0} ({1} frames)", tokens[0], Controller.State.Count);
         }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: load a save state and fast reset", Name) };
+        }
     }
 
     public class SaveSaveState : ICommand
@@ -61,6 +71,11 @@ namespace TAS.Commands
         {
             Controller.State.Save();
             Write("Wrote save to {0}", Controller.State.Prefix);
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: write current save state to {1}", Name, Controller.State.Prefix) };
         }
     }
 
@@ -78,6 +93,10 @@ namespace TAS.Commands
                     Write(line);
                 }
             }
+        }
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: get details about the current savestate", Name) };
         }
     }
 }

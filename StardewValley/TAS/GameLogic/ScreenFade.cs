@@ -6,14 +6,11 @@ namespace TAS.GameLogic
     public class ScreenFade : IGameLogic
     {
         public override string Name => "ScreenFade";
-        public override bool Toggleable => true;
 
-        public override bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public override bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate)
         {
             kstate = null;
             mstate = new SMouseState(Controller.LastFrameMouse(), false, false);
-            if (!Active)
-                return false;
 
             if (!CurrentLocation.Active || CurrentEvent.Active || CurrentMenu.Active)
                 return false;
@@ -26,6 +23,11 @@ namespace TAS.GameLogic
                 return true;
 
             return false;
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: advance frame through screen fades", Name) };
         }
     }
 }

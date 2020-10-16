@@ -7,7 +7,7 @@ namespace TAS.GameLogic
     {
         public override string Name => "DialogueBox";
 
-        public override bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public override bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate)
         {
             kstate = null;
             mstate = new SMouseState(Controller.LastFrameMouse(), false, false);
@@ -32,6 +32,11 @@ namespace TAS.GameLogic
                 return true;
 
             return false;
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: advance to click off frame", Name) };
         }
     }
 }

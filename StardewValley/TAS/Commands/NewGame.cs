@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.Remoting.Channels;
 using System.Text;
 
@@ -24,12 +25,14 @@ namespace TAS.Commands
             Favorite,
             Seed,
             Language,
+            Prefix,
             Done
         };
         public Stage CurrentStage;
         public string FarmerName;
         public string FarmName;
         public string FavoriteThing;
+        public string Prefix;
         public LocalizedContentManager.LanguageCode Language;
         public int Seed;
 
@@ -39,7 +42,7 @@ namespace TAS.Commands
             FarmName = "";
             FavoriteThing = "";
             Seed = 0;
-
+            Prefix = "";
             Subscribe();
             
             CurrentStage = Stage.Farmer;
@@ -61,7 +64,9 @@ namespace TAS.Commands
                 case Stage.Seed:
                     return string.Format("Enter Game Seed (default: {0}):", DefaultSeed);
                 case Stage.Language:
-                    return string.Format("Enter Language Code (options: [en,ja,ru,zh,pt,es,de,th,fr,ko,it,tr,hu]) (default: {0}):", DefaultLanguage);                        
+                    return string.Format("Enter Language Code (options: [en,ja,ru,zh,pt,es,de,th,fr,ko,it,tr,hu]) (default: {0}):", DefaultLanguage);
+                case Stage.Prefix:
+                    return string.Format("Enter File Name (default: {0}_{1}):", FarmerName, Seed);
                 case Stage.Done:
                     Unsubscribe();
                     Write("{0} | {1} | {2} | {3} | {4}", FarmerName, FarmName, FavoriteThing, Language, Seed);
@@ -136,10 +141,25 @@ namespace TAS.Commands
                         Write("Language {0} not valid, (options: [en,ja,ru,zh,pt,es,de,th,fr,ko,it,tr,hu]) (default: {1})", value, DefaultLanguage);
                     }
                     break;
+                case Stage.Prefix:
+                    CurrentStage++;
+                    if (value == "")
+                        Prefix = string.Format("{0}_{1}", FarmerName, Seed);
+                    else
+                        Prefix = value;
+                    break;
                 default:
                     throw new Exception("shouldn't get here...");
             }
             Write(MenuLine());
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[]
+            {
+                string.Format("{0}: setup a new savestate file", Name),
+            };
         }
     }
 }

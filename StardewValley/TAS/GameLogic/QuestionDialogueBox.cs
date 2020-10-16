@@ -7,7 +7,7 @@ namespace TAS.GameLogic
     {
         public override string Name => "QuestionDialogueBox";
 
-        public override bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public override bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate)
         {
             kstate = null;
             mstate = null;
@@ -21,8 +21,14 @@ namespace TAS.GameLogic
                 kstate = new SKeyboardState("Y");
                 return true;
             }
+            // push a command as the current active subscriber and open the console
+            // load the two options and ask for 1/2/3 for which menu choice they want
 
             return false;
+        }
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: answer question dialogue prompts", Name) };
         }
     }
 }

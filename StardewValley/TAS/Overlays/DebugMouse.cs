@@ -10,12 +10,8 @@ namespace TAS.Overlays
         public override string Name => "mouse";
 
         public Color MouseColor = Color.Black;
-        public DebugMouse()
-        {
-            Active = true;
-        }
 
-        public override void DrawImpl(StardewValley.SpriteBatch spriteBatch)
+        public override void ActiveDraw(StardewValley.SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();
             Vector2 coords = new Vector2(
@@ -26,6 +22,11 @@ namespace TAS.Overlays
                 Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, Game1.mouseCursor, 16, 16),
                 MouseColor * Game1.mouseCursorTransparency, 0f, Vector2.Zero, 4f + Game1.dialogueButtonScale / 150f,
                 SpriteEffects.None, 1f);
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: draw the real mouse", Name) };
         }
     }
 

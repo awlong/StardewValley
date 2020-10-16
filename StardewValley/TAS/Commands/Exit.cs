@@ -14,5 +14,10 @@ namespace TAS.Commands
         {
             Program.gamePtr.Exit();
         }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: Exit the actual game.", Name) };
+        }
     }
 }

@@ -9,21 +9,33 @@ namespace TAS.GameLogic
     public abstract class IGameLogic
     {
         public abstract string Name { get; }
-        public virtual bool Toggleable { get; }
         public bool Active = true;
 
         public bool Toggle()
         {
-            if (Toggleable)
-                Active = !Active;
+            Active = !Active;
             return Active;
         }
 
-        public virtual bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        {
+            kstate = null;
+            mstate = null;
+            if (Active)
+                return ActiveUpdate(out kstate, out mstate);
+            return false;
+        }
+
+        public virtual bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate) 
         {
             kstate = null;
             mstate = null;
             return false;
+        }
+
+        public virtual string[] HelpText()
+        {
+            return new string[] { string.Format(" \"{0}\": no help documentation", Name) };
         }
     }
 }

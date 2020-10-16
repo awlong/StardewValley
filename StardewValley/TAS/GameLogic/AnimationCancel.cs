@@ -8,7 +8,7 @@ namespace TAS.GameLogic
     public class AnimationCancel : IGameLogic
     {
         public override string Name => "AnimationCancel";
-        public override bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public override bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate)
         {
             kstate = null;
             mstate = new SMouseState(Controller.LastFrameMouse(), false, false);
@@ -29,6 +29,11 @@ namespace TAS.GameLogic
                 kstate.Add(Keys.R);
             }
             return true;
+        }
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: auto animation cancel", Name) };
         }
     }
 }

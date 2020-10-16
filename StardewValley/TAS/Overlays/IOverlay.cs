@@ -18,10 +18,15 @@ namespace TAS.Overlays
         {
             if (Active)
             {
-                DrawImpl(Game1.spriteBatch);
+                ActiveDraw(Game1.spriteBatch);
             }
         }
 
-        public virtual void DrawImpl(StardewValley.SpriteBatch spriteBatch) { }
+        public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
+
+        public virtual string[] HelpText()
+        {
+            return new string[] { string.Format(" \"{0}\": no help documentation", Name) };
+        }
     }
 }

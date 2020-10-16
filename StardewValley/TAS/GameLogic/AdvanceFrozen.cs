@@ -8,14 +8,11 @@ namespace TAS.GameLogic
     {
         public override string Name => "AdvanceFrozen";
 
-        public override bool Toggleable => true;
         private List<string> ValidStrings = new List<string>{ "showHoldingItem", "showReceiveNewItemMessage", "doSleepEmote", "frozen"};
-        public override bool Update(out SKeyboardState kstate, out SMouseState mstate)
+        public override bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate)
         {
             kstate = null;
             mstate = new SMouseState(Controller.LastFrameMouse(), false, false);
-            if (!Active)
-                return false;
 
             // only want to advance if can't move in a non-tool scenario
             if (!Player.Active || Player.CanMove || Player.UsingTool)
@@ -33,6 +30,10 @@ namespace TAS.GameLogic
                     return true;
             }
             return false;
+        }
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: advance when player is mid-animation state", Name) };
         }
     }
 }

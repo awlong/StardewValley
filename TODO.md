@@ -28,8 +28,9 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] Reset to frame (including FastAdvance)
     - [X] Save/Load input file (including FastAdvance)
     - [X] Quit
-    - [ ] Toggle IOverlay
-    - [ ] Toggle IGameLogic
+    - [X] Toggle IOverlay
+    - [X] Toggle IGameLogic
+    - [X] List overlays/logic/commands
     - [ ] List Forage in named zone (or current zone)
     - [ ] List Friendships
     - [ ] List MineContainers

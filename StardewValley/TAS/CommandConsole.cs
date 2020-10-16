@@ -57,7 +57,7 @@ namespace TAS
         private int cursorPosition;
 
         public Dictionary<string, ICommand> Commands;
-        public HashSet<string> ActiveSubscribers = new HashSet<string>();
+        public Stack<string> ActiveSubscribers = new Stack<string>();
 
         public CommandConsole()
         {
@@ -326,14 +326,10 @@ namespace TAS
 
         public bool HandleSubscribers(string command)
         {
-            // will I ever need multiple active subscribers?!
             if (ActiveSubscribers.Count > 0)
             {
-                string[] subscribers = ActiveSubscribers.ToArray();
-                foreach (string name in subscribers)
-                {
-                    Commands[name].ReceiveInput(command);
-                }
+                string name = ActiveSubscribers.Peek();
+                Commands[name].ReceiveInput(command);
                 return true;
             }
             return false;
