@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAS.Components;
 using TAS.Inputs;
 
 namespace TAS.GameLogic
 {
-    public abstract class IGameLogic
+    public abstract class IGameLogic : IConsoleAware
     {
         public abstract string Name { get; }
         public bool Active = true;
@@ -28,17 +29,5 @@ namespace TAS.GameLogic
         }
 
         public abstract bool ActiveUpdate(out SKeyboardState kstate, out SMouseState mstate);
-
-        public abstract string[] HelpText();
-
-        public void Write(string line) { SGame.console.PushResult(line); }
-        public void Write(string format, params object[] args) { Write(string.Format(format, args)); }
-        public void Write(string[] lines)
-        {
-            foreach (var line in lines)
-            {
-                Write(line);
-            }
-        }
     }
 }

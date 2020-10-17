@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+using TAS.Components;
 
 namespace TAS.Commands
 {
-    public abstract class ICommand
+    public abstract class ICommand : IConsoleAware
     {
         public abstract string Name { get; }
         public abstract void Run(string[] tokens);
@@ -21,17 +18,6 @@ namespace TAS.Commands
             SGame.console.ActiveSubscribers.Pop(); 
         }
 
-        public void Write(string line) { SGame.console.PushResult(line); }
-        public void Write(string format, params object[] args) { Write(string.Format(format, args)); }
-        public void Write(string[] lines)
-        {
-            foreach(var line in lines)
-            {
-                Write(line);
-            }
-        }
         public virtual string[] ParseToken(string token) { return null; }
-
-        public abstract string[] HelpText();
     }
 }

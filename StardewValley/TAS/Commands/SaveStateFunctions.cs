@@ -99,4 +99,19 @@ namespace TAS.Commands
             return new string[] { string.Format("{0}: get details about the current savestate", Name) };
         }
     }
+
+    public class GetCurrentFrame : ICommand
+    {
+        public override string Name => "frame";
+
+        public override string[] HelpText()
+        {
+            return new string[] { string.Format("{0}: get the current frame", Name) };
+        }
+
+        public override void Run(string[] tokens)
+        {
+            Write("frame: {0}", StardewValley.DateTime.CurrentFrame);
+        }
+    }
 }

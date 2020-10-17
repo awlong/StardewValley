@@ -1,6 +1,6 @@
 # TODO List 
 
-This will be continuously added to, I should have probably used github projects vs this.
+This will be continuously added to, I should really use github projects vs this but :man_shrugging:.
 
 ## Upcoming
 
@@ -18,10 +18,11 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] Sleep details
     - [ ] Info panels
 - [ ] Commands via console
+    - [ ] Peek the next set of random numbers
+    - [ ] List MineContainers
     - [X] Basic filesystem commands
     - [X] Create new SaveState
-    - [ ] Get current frame
-    - [ ] Peek the next set of random numbers
+    - [X] Get current frame
     - [X] Get details on SaveState
     - [X] Advance frame (or multiple)
     - [X] Advance to next second
@@ -33,7 +34,6 @@ This will be continuously added to, I should have probably used github projects 
     - [X] List overlays/logic/commands
     - [X] List Forage in named zone (or current zone)
     - [X] List Friendships
-    - [ ] List MineContainers
     - [X] List Player Details (pos, luck, steps, ene, hp, xp)
     - [X] List TrashCans
 - Automation logic
@@ -49,6 +49,13 @@ This will be continuously added to, I should have probably used github projects 
     - [ ] getting started for code build
     - [ ] getting started with the tas interface
     - [X] ingame help (method in place for commands)
+        - ENFORCED that every callable/addressable thing by the console has help text
+
+Features to look into:
+- Tab Complete/Suggest for the command console
+    - I can know if tab was pressed, I just need to prefix scan the current string against available options
+    - if multiple hits I can write those as options to console
+    - if solo hit then you just replace that token of the entry text with the correct one and advance the cursor
 
 
 ## Completed

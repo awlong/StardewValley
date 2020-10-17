@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley;
+using TAS.Components;
 
 namespace TAS.Overlays
 {
-    public abstract class IOverlay
+    public abstract class IOverlay : IConsoleAware
     {
         public abstract string Name { get; }
         public bool Active = false;
@@ -24,6 +25,5 @@ namespace TAS.Overlays
 
         public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
 
-        public abstract string[] HelpText();
     }
 }
