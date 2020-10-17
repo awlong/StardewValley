@@ -80,5 +80,31 @@ namespace TAS.Overlays
                 start.Y += Font.LineSpacing;
             }
         }
+        
+        // draw at on screen coord
+        protected void DrawObjectSprite(SpriteBatch spriteBatch, Vector2 coord, int parentSheetIndex)
+        {
+            DrawObjectSprite(spriteBatch, coord, new Vector2(Game1.tileSize, Game1.tileSize), parentSheetIndex);
+        }
+        
+        // draw over on screen tile
+        protected void DrawObjectSpriteAtTile(SpriteBatch spriteBatch, Vector2 tile, int parentSheetIndex)
+        {
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            DrawObjectSprite(spriteBatch, local, new Vector2(Game1.tileSize, Game1.tileSize), parentSheetIndex);
+        }
+        protected void DrawObjectSprite(SpriteBatch spriteBatch, Vector2 start, Vector2 dim, int parentSheetIndex)
+        {
+            Rectangle sourceRect = GameLocation.getSourceRectForObject(parentSheetIndex);
+            Rectangle destRect = new Rectangle((int)start.X, (int)start.Y, (int)dim.X, (int)dim.Y);
+            DrawObjectSprite(spriteBatch, sourceRect, destRect);
+        }
+
+        protected void DrawObjectSprite(SpriteBatch spriteBatch, Rectangle sourceRect, Rectangle destRect)
+        {
+            spriteBatch.Draw(Game1.objectSpriteSheet, destRect, sourceRect, Color.White);
+        }
+
+
     }
 }
