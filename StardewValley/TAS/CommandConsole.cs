@@ -44,8 +44,8 @@ namespace TAS
         private Color textEntryColor = new Color(100, 180, 180, 255);
         private Color cursorColor = new Color(180, 180, 180, 128);
 
-        private SpriteFont consoleFont;
-        private Texture2D solidColor;
+        public SpriteFont consoleFont;
+        public Texture2D solidColor;
         private SpriteBatch spriteBatch;
 
         private List<TextElement> historyLog;

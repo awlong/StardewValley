@@ -5,12 +5,12 @@ This will be continuously added to, I should really use github projects vs this 
 ## Upcoming
 
 - [ ] Add overlays beyond mouse
-    - [ ] Tile grid
+    - [X] Tile grid
     - [ ] Draw on Tile
     - [ ] Draw line between tiles
     - [ ] Draw text inside tile
     - [ ] Hitboxes
-    - [ ] Mouse Coords
+    - [X] Mouse Coords
     - [ ] Crop Quality Date
     - [ ] Rock Ladder Drop #
     - [ ] Walkable tiles
