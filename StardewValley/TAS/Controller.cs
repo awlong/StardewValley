@@ -136,7 +136,14 @@ namespace TAS
                     advance = true;
                     RejectedRealKeys.Add(Keys.Space);
                 }
-
+                // Anim Cancel
+                if (RealInputState.KeyTriggered(Keys.R))
+                {
+                    advance = true;
+                    AddedRealKeys.Add(Keys.R);
+                    AddedRealKeys.Add(Keys.RightShift);
+                    AddedRealKeys.Add(Keys.Delete);
+                }
                 // quit
                 if ((RealInputState.KeyTriggered(Keys.OemOpenBrackets) && RealInputState.IsKeyDown(Keys.OemCloseBrackets)) ||
                     (RealInputState.IsKeyDown(Keys.OemOpenBrackets) && RealInputState.KeyTriggered(Keys.OemCloseBrackets)))

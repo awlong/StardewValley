@@ -39,7 +39,7 @@ namespace TAS.GameLogic
         {
             return new string[]
             {
-                string.Format("{0}: advance forward the set number of frames")
+                string.Format("{0}: advance forward the set number of frames", Name)
             };
         }
     }

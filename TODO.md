@@ -42,7 +42,9 @@ This will be continuously added to, I should have probably used github projects 
         - [ ] Overlay to draw the path
         - [ ] GameLogic to advance along the path
         - [ ] Commands to find the path and advance either the next stage or all steps
-    - [ ] Auto swing pickup
+    - [X] Auto swing pickup
+        - [ ] auto swap to melee weapon
+        - [ ] on next frame anim cancel
 - [ ] DOCUMENTATION
     - [ ] getting started for code build
     - [ ] getting started with the tas interface

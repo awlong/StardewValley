@@ -30,10 +30,6 @@ namespace TAS.GameState
                         {
                             behavior = Game1.player.FarmerSprite.CurrentAnimation[animIndex].frameStartBehavior.Method.Name;
                         }
-                        else if (!CanMove)
-                        {
-                            behavior = "frozen";
-                        }
                     }
                 }
                 return behavior;
@@ -53,13 +49,31 @@ namespace TAS.GameState
                         {
                             behavior = Game1.player.FarmerSprite.CurrentAnimation[animIndex-1].frameEndBehavior.Method.Name;
                         }
-                        else if (!CanMove)
-                        {
-                            behavior = "frozen";
-                        }
                     }
                 }
                 return behavior;
+            }
+        }
+
+        public static bool IsHarvestingItem
+        {
+            get
+            {
+                if (Game1.player != null && Game1.player.FarmerSprite != null)
+                {
+                    int animationType = (int)Reflector.GetValue(Game1.player.FarmerSprite, "currentSingleAnimation");
+                    switch (animationType)
+                    {
+                        case FarmerSprite.harvestItemUp:
+                        case FarmerSprite.harvestItemDown:
+                        case FarmerSprite.harvestItemLeft:
+                        case FarmerSprite.harvestItemRight:
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+                return false;
             }
         }
     }

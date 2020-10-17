@@ -84,7 +84,7 @@ namespace TAS
             // Escape Keys
             Keys.RightShift, Keys.R, Keys.Delete,
             // Misc
-            Keys.LeftShift,
+            Keys.LeftShift, Keys.LeftControl
         };
     }
 }

@@ -43,7 +43,7 @@ namespace TAS.Commands
         {
             return new string[]
             {
-                string.Format("{0}: advance a number of frames"),
+                string.Format("{0}: advance a number of frames", Name),
                 string.Format("advance 1 frame: \"advance\""),
                 string.Format("advance N frame: \"advance N\""),
                 string.Format("advance next second: \"advance s\"")
