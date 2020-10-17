@@ -1,4 +1,6 @@
-﻿using StardewValley;
+﻿using Netcode;
+using StardewValley;
+using StardewValley.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,8 @@ namespace TAS.GameState
         public static bool CanMove { get { return Game1.player.CanMove; } }
         public static bool UsingTool { get { return Game1.player.UsingTool; } }
         public static Tool CurrentTool { get { return Game1.player?.CurrentTool; } }
+
+        public static NetStringDictionary<Friendship, NetRef<Friendship>> Friendships { get { return Game1.player?.friendshipData;} }
         public static string CurrentAnimationStartBehavior
         {
             get

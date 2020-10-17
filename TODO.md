@@ -31,17 +31,18 @@ This will be continuously added to, I should have probably used github projects 
     - [X] Toggle IOverlay
     - [X] Toggle IGameLogic
     - [X] List overlays/logic/commands
-    - [ ] List Forage in named zone (or current zone)
-    - [ ] List Friendships
+    - [X] List Forage in named zone (or current zone)
+    - [X] List Friendships
     - [ ] List MineContainers
-    - [ ] List Player Details (pos, luck, steps, ene, hp, xp, animation)
-    - [ ] List TrashCans
+    - [X] List Player Details (pos, luck, steps, ene, hp, xp)
+    - [X] List TrashCans
 - Automation logic
     - [ ] Minimum time path to tile
         - [ ] Code to find the path (copy)
         - [ ] Overlay to draw the path
         - [ ] GameLogic to advance along the path
         - [ ] Commands to find the path and advance either the next stage or all steps
+    - [ ] Auto swing pickup
 - [ ] DOCUMENTATION
     - [ ] getting started for code build
     - [ ] getting started with the tas interface
