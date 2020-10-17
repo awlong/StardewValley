@@ -43,8 +43,8 @@ This will be continuously added to, I should have probably used github projects 
         - [ ] GameLogic to advance along the path
         - [ ] Commands to find the path and advance either the next stage or all steps
     - [X] Auto swing pickup
-        - [ ] auto swap to melee weapon
-        - [ ] on next frame anim cancel
+        - [X] auto swap to melee weapon
+        - [X] on next frame anim cancel
 - [ ] DOCUMENTATION
     - [ ] getting started for code build
     - [ ] getting started with the tas interface
