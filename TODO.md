@@ -7,7 +7,7 @@ This will be continuously added to, I should really use github projects vs this 
 - [ ] Add overlays beyond mouse
     - [X] Tile grid
     - [ ] Draw on Tile
-    - [ ] Draw line between tiles
+    - [X] Draw line between tiles
     - [ ] Draw text inside tile
     - [ ] Hitboxes
     - [X] Mouse Coords

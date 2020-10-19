@@ -9,7 +9,7 @@ namespace TAS.GameState
 {
     public class Globals
     {
-        public static Vector2 ViewportCenter { get { return new Vector2(Game1.viewport.X / 2, Game1.viewport.Y / 2); } }
+        public static Vector2 ViewportCenter { get { return new Vector2(Game1.viewport.Width / 2, Game1.viewport.Height / 2); } }
         public static int ViewportWidth { get { return Game1.graphics.GraphicsDevice.Viewport.Width; } }
         public static int ViewportHeight { get { return Game1.graphics.GraphicsDevice.Viewport.Height; } }
         public static bool GlobalFade { get { return Game1.globalFade; } }

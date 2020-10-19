@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAS.GameState;
 
 namespace TAS.Overlays
 {
@@ -33,6 +34,7 @@ namespace TAS.Overlays
             List<string> data = new List<string>();
             data.Add(string.Format("({0},{1})", mouseTileX, mouseTileY));
             DrawText(spriteBatch, data, coords, TextColor, RectColor);
+
         }
     }
 }

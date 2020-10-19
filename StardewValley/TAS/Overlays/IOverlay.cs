@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TAS.Components;
 using TAS.GameState;
 using SpriteBatch = StardewValley.SpriteBatch;
@@ -105,6 +107,35 @@ namespace TAS.Overlays
             spriteBatch.Draw(Game1.objectSpriteSheet, destRect, sourceRect, Color.White);
         }
 
-
+        protected void DrawLineGlobal(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, int thickness = 1)
+        {
+            Vector2 startCoord = Game1.GlobalToLocal(start);
+            Vector2 endCoord = Game1.GlobalToLocal(end);
+            DrawLineLocal(spriteBatch, startCoord, endCoord, color, thickness);
+        }
+        protected void DrawLineBetweenTiles(SpriteBatch spriteBatch, Vector2 startTile, Vector2 endTile, Color color, int thickness=1)
+        {
+            Vector2 startCoord = Game1.GlobalToLocal(Game1.viewport, (startTile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
+            Vector2 endCoord = Game1.GlobalToLocal(Game1.viewport, (endTile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
+            DrawLineLocal(spriteBatch, startCoord, endCoord, color, thickness);
+        }
+        protected void DrawLineLocalToGlobal(SpriteBatch spriteBatch, Vector2 local, Vector2 global, Color color, int thickness=1)
+        {
+            Vector2 globalCoord = Game1.GlobalToLocal(global);
+            DrawLineLocal(spriteBatch, local, globalCoord, color, thickness);
+        }
+        protected void DrawLineLocalToTile(SpriteBatch spriteBatch, Vector2 local, Vector2 tile, Color color, int thickness = 1)
+        {
+            Vector2 tileCoord = Game1.GlobalToLocal(Game1.viewport, (tile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
+            DrawLineLocal(spriteBatch, local, tileCoord, color, thickness);
+        }
+        protected void DrawLineLocal(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, int thickness=1)
+        {
+            Vector2 edge = end - start;
+            float angle = (float)Math.Atan2(edge.Y, edge.X);
+            spriteBatch.Draw(SolidColor,
+                new Rectangle((int)start.X, (int)start.Y, (int)edge.Length(), thickness),
+                null, color, angle, Vector2.Zero, SpriteEffects.None, 0);
+        }
     }
 }
