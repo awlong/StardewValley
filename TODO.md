@@ -9,7 +9,7 @@ This will be continuously added to, I should really use github projects vs this 
     - [ ] Draw on Tile
     - [X] Draw line between tiles
     - [ ] Draw text inside tile
-    - [ ] Hitboxes
+    - [X] Hitboxes
     - [X] Mouse Coords
     - [ ] Crop Quality Date
     - [ ] Rock Ladder Drop #

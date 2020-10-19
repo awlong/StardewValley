@@ -18,6 +18,7 @@ namespace TAS.Overlays
         public bool Toggle() { Active = !Active; return Active; }
         public Texture2D SolidColor { get { return SGame.console.solidColor; } }
         public SpriteFont Font { get { return SGame.console.consoleFont; } }
+
         public virtual void Update() { }
         public virtual void Reset() { }
 
@@ -34,7 +35,7 @@ namespace TAS.Overlays
         public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
 
 
-        protected void DrawText(SpriteBatch spriteBatch, string text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale=1)
+        protected void DrawText(SpriteBatch spriteBatch, string text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale = 1)
         {
             // measure font and offset vector if drawing offscreen
             Vector2 textSize = Font.MeasureString(text) * fontScale;
@@ -52,7 +53,7 @@ namespace TAS.Overlays
             spriteBatch.DrawString(Font, text, vector, textColor, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
         }
 
-        protected void DrawText(SpriteBatch spriteBatch, IEnumerable<string> text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale=1)
+        protected void DrawText(SpriteBatch spriteBatch, IEnumerable<string> text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale = 1)
         {
             float maxWidth = 0;
             float height = 0;
@@ -82,13 +83,13 @@ namespace TAS.Overlays
                 start.Y += Font.LineSpacing;
             }
         }
-        
+
         // draw at on screen coord
         protected void DrawObjectSprite(SpriteBatch spriteBatch, Vector2 coord, int parentSheetIndex)
         {
             DrawObjectSprite(spriteBatch, coord, new Vector2(Game1.tileSize, Game1.tileSize), parentSheetIndex);
         }
-        
+
         // draw over on screen tile
         protected void DrawObjectSpriteAtTile(SpriteBatch spriteBatch, Vector2 tile, int parentSheetIndex)
         {
@@ -113,13 +114,13 @@ namespace TAS.Overlays
             Vector2 endCoord = Game1.GlobalToLocal(end);
             DrawLineLocal(spriteBatch, startCoord, endCoord, color, thickness);
         }
-        protected void DrawLineBetweenTiles(SpriteBatch spriteBatch, Vector2 startTile, Vector2 endTile, Color color, int thickness=1)
+        protected void DrawLineBetweenTiles(SpriteBatch spriteBatch, Vector2 startTile, Vector2 endTile, Color color, int thickness = 1)
         {
             Vector2 startCoord = Game1.GlobalToLocal(Game1.viewport, (startTile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
             Vector2 endCoord = Game1.GlobalToLocal(Game1.viewport, (endTile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
             DrawLineLocal(spriteBatch, startCoord, endCoord, color, thickness);
         }
-        protected void DrawLineLocalToGlobal(SpriteBatch spriteBatch, Vector2 local, Vector2 global, Color color, int thickness=1)
+        protected void DrawLineLocalToGlobal(SpriteBatch spriteBatch, Vector2 local, Vector2 global, Color color, int thickness = 1)
         {
             Vector2 globalCoord = Game1.GlobalToLocal(global);
             DrawLineLocal(spriteBatch, local, globalCoord, color, thickness);
@@ -129,7 +130,7 @@ namespace TAS.Overlays
             Vector2 tileCoord = Game1.GlobalToLocal(Game1.viewport, (tile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
             DrawLineLocal(spriteBatch, local, tileCoord, color, thickness);
         }
-        protected void DrawLineLocal(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, int thickness=1)
+        protected void DrawLineLocal(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, int thickness = 1)
         {
             Vector2 edge = end - start;
             float angle = (float)Math.Atan2(edge.Y, edge.X);
@@ -137,5 +138,35 @@ namespace TAS.Overlays
                 new Rectangle((int)start.X, (int)start.Y, (int)edge.Length(), thickness),
                 null, color, angle, Vector2.Zero, SpriteEffects.None, 0);
         }
+
+        protected void DrawRectGlobal(SpriteBatch spriteBatch, Rectangle rect, Color color)
+        {
+            Rectangle localRect = Game1.GlobalToLocal(Game1.viewport, rect);
+            DrawRectLocal(spriteBatch, localRect, color);
+        }
+        protected void DrawRectGlobal(SpriteBatch spriteBatch, Rectangle rect, Color color, Color crossColor)
+        {
+            Rectangle localRect = Game1.GlobalToLocal(Game1.viewport, rect);
+            DrawRectLocal(spriteBatch, localRect, color, crossColor);
+        }
+        protected void DrawRectLocal(SpriteBatch spriteBatch, Rectangle rect, Color color)
+        {
+            spriteBatch.Draw(SolidColor, rect, null, color);
+        }
+        protected void DrawRectLocal(SpriteBatch spriteBatch, Rectangle rect, Color color, Color crossColor)
+        {
+            spriteBatch.Draw(SolidColor, rect, null, color);
+            DrawLineLocal(spriteBatch, new Vector2(rect.Left, rect.Center.Y), new Vector2(rect.Right, rect.Center.Y), crossColor);
+            DrawLineLocal(spriteBatch, new Vector2(rect.Center.X, rect.Top), new Vector2(rect.Center.X, rect.Bottom), crossColor);
+        }
+        protected void DrawCenteredTextInRect(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1)
+        {
+            // measure font and offset vector if drawing offscreen
+            Rectangle local = Game1.GlobalToLocal(Game1.viewport, rect);
+            Vector2 textSize = Font.MeasureString(text) * fontScale;
+            Vector2 pos = (new Vector2(local.Width - textSize.X, local.Height - textSize.Y) / 2) + new Vector2(local.X, local.Y);
+            spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+        }
+
     }
 }

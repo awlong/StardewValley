@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Locations;
+using StardewValley.Monsters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,22 @@ namespace TAS.GameState
     {
         public static bool Active { get { return Game1.currentLocation != null; } }
         public static string Name { get { return Game1.currentLocation?.Name; } }
+
+        public static IEnumerable<NPC> Characters
+        {
+            get
+            {
+                return Game1.currentLocation?.characters.Where((n) => (!(n is Monster)));
+            }
+        }
+
+        public static IEnumerable<NPC> Monsters
+        {
+            get
+            {
+                return (Game1.currentLocation?.characters.Where((n) => (n is Monster)));
+            }
+        }
 
         public static IEnumerable<KeyValuePair<Vector2, StardewValley.Object>> Forage
         {
