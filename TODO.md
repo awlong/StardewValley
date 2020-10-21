@@ -11,10 +11,10 @@ This will be continuously added to, I should really use github projects vs this 
     - [ ] Draw text inside tile
     - [X] Hitboxes
     - [X] Mouse Coords
-    - [ ] Crop Quality Date
+    - [X] Crop Quality Date
     - [ ] Rock Ladder Drop #
     - [X] Walkable tiles
-    - [ ] Mixed Seed planting
+    - [X] Mixed Seed planting
     - [ ] Sleep details
     - [ ] Info panels
 - [ ] Commands via console

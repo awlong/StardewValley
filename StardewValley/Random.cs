@@ -50,7 +50,7 @@ namespace StardewValley
             }
             set
             {
-                Reflector.SetValue(_random, "SeedArray", value);
+                Reflector.SetValue(_random, "SeedArray", value.Clone());
             }
         }
 

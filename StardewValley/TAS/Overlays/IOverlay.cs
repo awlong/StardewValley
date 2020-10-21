@@ -158,16 +158,27 @@ namespace TAS.Overlays
             Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
             DrawRectLocal(spriteBatch, new Rectangle((int)local.X, (int)local.Y, Game1.tileSize, Game1.tileSize), color);
         }
-        protected void DrawCenteredTextInRect(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1)
+        protected void DrawCenteredTextInRect(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1, int shadowOffset = 1)
         {
             // measure font and offset vector if drawing offscreen
             Rectangle local = Game1.GlobalToLocal(Game1.viewport, rect);
             Vector2 textSize = Font.MeasureString(text) * fontScale;
             Vector2 pos = (new Vector2(local.Width - textSize.X, local.Height - textSize.Y) / 2) + new Vector2(local.X, local.Y);
+            spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
             spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
         }
-        
-        protected void DrawTileOutline(SpriteBatch spriteBatch, Vector2 tile, Color color, float scale=1f)
+        protected void DrawCenteredTextInTile(SpriteBatch spriteBatch, Vector2 tile, string text, Color color, float fontScale = 1, int shadowOffset = 1)
+        {
+            // measure font and offset vector if drawing offscreen
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            Rectangle rect = new Rectangle((int)local.X, (int)local.Y, Game1.tileSize, Game1.tileSize);
+            Vector2 textSize = Font.MeasureString(text) * fontScale;
+            Vector2 pos = (new Vector2(rect.Width - textSize.X, rect.Height - textSize.Y) / 2) + new Vector2(rect.X, rect.Y);
+            spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+        }
+
+        protected void DrawTileOutline(SpriteBatch spriteBatch, Vector2 tile, Color color, float scale = 1f)
         {
             if (OutlineRect == null)
                 OutlineRect = new Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 29, -1, -1));
