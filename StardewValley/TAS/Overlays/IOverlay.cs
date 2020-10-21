@@ -19,21 +19,15 @@ namespace TAS.Overlays
         public Texture2D SolidColor { get { return SGame.console.solidColor; } }
         public SpriteFont Font { get { return SGame.console.consoleFont; } }
 
-        public virtual void Update() { }
+        public void Update() { if (Active) { ActiveUpdate(); } }
+        public virtual void ActiveUpdate() { }
+
+        public void Draw() { if (Active) { ActiveDraw(Game1.spriteBatch); } }
+        public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
+
         public virtual void Reset() { }
 
         private static Rectangle? OutlineRect;
-
-        public void Draw()
-        {
-            if (Active)
-            {
-                ActiveDraw(Game1.spriteBatch);
-            }
-        }
-
-        public virtual void ActiveDraw(SpriteBatch spriteBatch) { }
-
 
         protected void DrawText(SpriteBatch spriteBatch, string text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale = 1)
         {
@@ -159,6 +153,11 @@ namespace TAS.Overlays
             DrawLineLocal(spriteBatch, new Vector2(rect.Left, rect.Center.Y), new Vector2(rect.Right, rect.Center.Y), crossColor);
             DrawLineLocal(spriteBatch, new Vector2(rect.Center.X, rect.Top), new Vector2(rect.Center.X, rect.Bottom), crossColor);
         }
+        protected void DrawFilledTile(SpriteBatch spriteBatch, Vector2 tile, Color color)
+        {
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            DrawRectLocal(spriteBatch, new Rectangle((int)local.X, (int)local.Y, Game1.tileSize, Game1.tileSize), color);
+        }
         protected void DrawCenteredTextInRect(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1)
         {
             // measure font and offset vector if drawing offscreen
@@ -167,6 +166,20 @@ namespace TAS.Overlays
             Vector2 pos = (new Vector2(local.Width - textSize.X, local.Height - textSize.Y) / 2) + new Vector2(local.X, local.Y);
             spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
         }
-
+        
+        protected void DrawTileOutline(SpriteBatch spriteBatch, Vector2 tile, Color color, float scale=1f)
+        {
+            if (OutlineRect == null)
+                OutlineRect = new Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 29, -1, -1));
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            spriteBatch.Draw(Game1.mouseCursors, local, OutlineRect, color, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+        }
+        protected void DrawTileOutline(SpriteBatch spriteBatch, Vector2 tile, Color color, Vector2 scale)
+        {
+            if (OutlineRect == null)
+                OutlineRect = new Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 29, -1, -1));
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            spriteBatch.Draw(Game1.mouseCursors, local, OutlineRect, color, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+        }
     }
 }

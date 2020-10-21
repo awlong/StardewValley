@@ -6,14 +6,14 @@ This will be continuously added to, I should really use github projects vs this 
 
 - [ ] Add overlays beyond mouse
     - [X] Tile grid
-    - [ ] Draw on Tile
+    - [X] Draw on Tile
     - [X] Draw line between tiles
     - [ ] Draw text inside tile
     - [X] Hitboxes
     - [X] Mouse Coords
     - [ ] Crop Quality Date
     - [ ] Rock Ladder Drop #
-    - [ ] Walkable tiles
+    - [X] Walkable tiles
     - [ ] Mixed Seed planting
     - [ ] Sleep details
     - [ ] Info panels

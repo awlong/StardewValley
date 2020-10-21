@@ -65,6 +65,7 @@ namespace TAS
         {
             // get the actual input data loaded
             RealInputState.Update();
+            UpdateOverlays();
 
             // check if prior state or current keyboard should advance
             bool storedInputAdvance = HandleStoredInput();
@@ -101,6 +102,13 @@ namespace TAS
             return SInputState.Active;
         }
 
+        public static void UpdateOverlays()
+        {
+            foreach (var overlay in Overlays.Values)
+            {
+                overlay.Update();
+            }
+        }
         public static void Draw()
         {
             Game1.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
