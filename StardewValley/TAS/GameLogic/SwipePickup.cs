@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using TAS.GameState;
 using TAS.Inputs;
+using TAS.Utilities;
 
 namespace TAS.GameLogic
 {
@@ -36,47 +37,21 @@ namespace TAS.GameLogic
             // are we harvesting?
             if (Player.IsHarvestingItem)
             {
-                kstate = new SKeyboardState();
-                if (!(Player.CurrentTool is MeleeWeapon))
+                bool hasTool = ToolUsage.GetToolKey<MeleeWeapon>(out kstate);
+                if (!hasTool)
                 {
-                    // flip tool if possible
-                    for(int i = 0; i < Game1.player.maxItems; i++)
-                    {
-                        if (Game1.player.items[i] is MeleeWeapon)
-                        {
-                            if (i < 12)
-                            {
-                                Keys key;
-                                if (i == 10)
-                                    key = Keys.OemMinus;
-                                else if (i == 11)
-                                    key = Keys.OemPlus;
-                                else
-                                    key = (Keys)Enum.Parse(typeof(Keys), string.Format("D{0}",(i+1) % 10));
-                                kstate.Add(key);
-                                return true;
-                            }
-                            else if (i < 24)
-                            {
-                                kstate.Add(Keys.LeftControl);
-                                kstate.Add(Keys.Tab);
-                                return true;
-                            }
-                            else if (i < 36)
-                            {
-                                kstate.Add(Keys.Tab);
-                                return true;
-                            }
-                        }
-                    }
                     // don't auto advance, you may want to do more complex things here
                     return false;
                 }
+                // on the correct tool
+                if (kstate == null)
+                {
+                    kstate = new SKeyboardState("C");
+                    SwungLastFrame = true;
+                }
                 else
                 {
-                    // swing to trigger the cancel pickup
-                    kstate.Add(Keys.C);
-                    SwungLastFrame = true;
+                    // kstate contains the current keyboard command to swap to the tool
                 }
                 return true;
             }

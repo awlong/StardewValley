@@ -17,6 +17,7 @@ namespace TAS.GameState
         public static bool UsingTool { get { return Game1.player.UsingTool; } }
         public static Tool CurrentTool { get { return Game1.player?.CurrentTool; } }
 
+        public static Vector2 CurrentTile {  get { return Game1.player.getTileLocation(); } }
         public static Rectangle BoundingBox {  get { return Game1.player.GetBoundingBox(); } }
         public static NetStringDictionary<Friendship, NetRef<Friendship>> Friendships { get { return Game1.player?.friendshipData;} }
         public static string CurrentAnimationStartBehavior

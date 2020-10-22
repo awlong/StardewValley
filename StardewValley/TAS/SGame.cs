@@ -15,6 +15,7 @@ using TAS.Wrappers;
 
 using SpriteBatch = StardewValley.SpriteBatch;
 using DateTime = StardewValley.DateTime;
+using TAS.Utilities;
 
 namespace TAS
 {
@@ -32,6 +33,7 @@ namespace TAS
         public static int ReplayNormalFrames = 30;
         public static CommandConsole console;
         public static LocalizedContentManager content;
+        public static PathFinder pathFinder;
 
         public SGame()
         {
@@ -51,6 +53,7 @@ namespace TAS
             base.Content.RootDirectory = "Content";
             base.Exiting += OnExiting;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            pathFinder = new PathFinder();
         }
 
         protected override void Initialize()

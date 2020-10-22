@@ -88,10 +88,7 @@ namespace TAS.Commands
             string[] fields = Controller.State.ToString().Split('|');
             foreach (var field in fields)
             {
-                foreach (var line in field.Split(new char[] { '\r', '\n' },StringSplitOptions.RemoveEmptyEntries))
-                {
-                    Write(line);
-                }
+                Write(field);
             }
         }
         public override string[] HelpText()
