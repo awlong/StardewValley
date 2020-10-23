@@ -8,11 +8,11 @@ This will be continuously added to, I should really use github projects vs this 
     - [X] Tile grid
     - [X] Draw on Tile
     - [X] Draw line between tiles
-    - [ ] Draw text inside tile
+    - [X] Draw text inside tile
     - [X] Hitboxes
     - [X] Mouse Coords
     - [X] Crop Quality Date
-    - [ ] Rock Ladder Drop #
+    - [X] Rock Ladder Drop #
     - [X] Walkable tiles
     - [X] Mixed Seed planting
     - [ ] Sleep details
@@ -37,11 +37,11 @@ This will be continuously added to, I should really use github projects vs this 
     - [X] List Player Details (pos, luck, steps, ene, hp, xp)
     - [X] List TrashCans
 - Automation logic
-    - [ ] Minimum time path to tile
-        - [ ] Code to find the path (copy)
-        - [ ] Overlay to draw the path
-        - [ ] GameLogic to advance along the path
-        - [ ] Commands to find the path and advance either the next stage or all steps
+    - [X] Minimum time path to tile
+        - [X] Code to find the path (copy)
+        - [X] Overlay to draw the path
+        - [X] GameLogic to advance along the path
+        - [X] Commands to find the path and advance either the next stage or all steps
     - [X] Auto swing pickup
         - [X] auto swap to melee weapon
         - [X] on next frame anim cancel

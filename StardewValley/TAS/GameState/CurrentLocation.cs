@@ -168,6 +168,8 @@ namespace TAS.GameState
             return "unknown item";
         }
 
+        public static bool IsMines { get { return Game1.currentLocation is MineShaft; } }
+        public static int MineLevel { get { return (Game1.currentLocation as MineShaft).mineLevel; } }
         public static int StonesLeftOnThisLevel()
         {
             if (Game1.currentLocation is MineShaft mine)
@@ -183,6 +185,23 @@ namespace TAS.GameState
                 if (mine.mineLevel % 10 == 0 || mine.mineLevel % 40 == 12)
                     return true;
                 return Reflector.GetValue<MineShaft, bool>(mine, "ladderHasSpawned");
+            }
+            return false;
+        }
+        public static int EnemyCount
+        {
+            get
+            {
+                if (Game1.currentLocation is MineShaft mine)
+                    return mine.EnemyCount;
+                return 0;
+            }
+        }
+        public static bool MustKillAllMonstersToAdvance()
+        {
+            if (Game1.currentLocation is MineShaft mine)
+            {
+                return mine.mustKillAllMonstersToAdvance();
             }
             return false;
         }
