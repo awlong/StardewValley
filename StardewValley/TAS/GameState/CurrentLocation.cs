@@ -167,5 +167,24 @@ namespace TAS.GameState
             }
             return "unknown item";
         }
+
+        public static int StonesLeftOnThisLevel()
+        {
+            if (Game1.currentLocation is MineShaft mine)
+            {
+                return Reflector.GetValue<MineShaft, int>(mine, "stonesLeftOnThisLevel");
+            }
+            return 0;
+        }
+        public static bool LadderHasSpawned()
+        {
+            if (Game1.currentLocation is MineShaft mine)
+            {
+                if (mine.mineLevel % 10 == 0 || mine.mineLevel % 40 == 12)
+                    return true;
+                return Reflector.GetValue<MineShaft, bool>(mine, "ladderHasSpawned");
+            }
+            return false;
+        }
     }
 }

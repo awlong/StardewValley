@@ -251,6 +251,10 @@ namespace TAS
             DrawWrapper.Reset();
             SInputState.Reset();
             DateTime.Reset();
+            foreach (var overlay in Overlays.Values)
+            {
+                overlay.Reset();
+            }
         }
     }
 }

@@ -78,6 +78,18 @@ namespace TAS.Overlays
             }
         }
 
+        protected void DrawTextAtTile(SpriteBatch spriteBatch, string text, Vector2 tile, Color textColor, Color backgroundColor, float fontScale = 1)
+        {
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            DrawText(spriteBatch, text, local, textColor, backgroundColor, fontScale);
+        }
+
+        protected void DrawTextAtTile(SpriteBatch spriteBatch, IEnumerable<string> text, Vector2 tile, Color textColor, Color backgroundColor, float fontScale = 1)
+        {
+            Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
+            DrawText(spriteBatch, text, local, textColor, backgroundColor, fontScale);
+        }
+
         // draw at on screen coord
         protected void DrawObjectSprite(SpriteBatch spriteBatch, Vector2 coord, int parentSheetIndex)
         {
@@ -131,6 +143,13 @@ namespace TAS.Overlays
             spriteBatch.Draw(SolidColor,
                 new Rectangle((int)start.X, (int)start.Y, (int)edge.Length(), thickness),
                 null, color, angle, Vector2.Zero, SpriteEffects.None, 0);
+        }
+
+        protected void DrawLineTileToPlayer(SpriteBatch spriteBatch, Vector2 tile, Color color, int thickness = 1)
+        {
+            Vector2 tileCoord = Game1.GlobalToLocal(Game1.viewport, (tile + new Vector2(0.5f, 0.5f)) * Game1.tileSize);
+            Vector2 playerCoord = Game1.GlobalToLocal(Game1.viewport, Utility.PointToVector2(Game1.player.GetBoundingBox().Center));
+            DrawLineLocal(spriteBatch, playerCoord, tileCoord, color, thickness);
         }
 
         protected void DrawRectGlobal(SpriteBatch spriteBatch, Rectangle rect, Color color)
