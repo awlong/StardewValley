@@ -24,5 +24,30 @@ namespace TAS.Components
                 Write(line);
             }
         }
+
+        public void RunAlias(string alias)
+        {
+            string command = GetAlias(alias);
+            if (command != "")
+                SGame.console.RunCommand(command);
+        }
+
+        public IEnumerable<string> GetAllAliases()
+        {
+            return SGame.console.Aliases.Keys;
+        }
+        public string GetAlias(string alias)
+        {
+            if (SGame.console.Aliases.ContainsKey(alias))
+                return SGame.console.Aliases[alias];
+            return "";
+        }
+        public void SetAlias(string alias, string command)
+        {
+            if (SGame.console.Aliases.ContainsKey(alias))
+                SGame.console.Aliases[alias] = command;
+            else
+                SGame.console.Aliases.Add(alias, command);
+        }
     }
 }

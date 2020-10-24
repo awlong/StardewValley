@@ -57,6 +57,7 @@ namespace TAS
         private int cursorPosition;
 
         public Dictionary<string, ICommand> Commands;
+        public Dictionary<string, string> Aliases;
         public Stack<string> ActiveSubscribers = new Stack<string>();
 
         public CommandConsole()
@@ -79,6 +80,8 @@ namespace TAS
                 Commands.Add(command.Name, command);
                 Debug.WriteLine("Command \"{0}\" added to commands list", command.Name);
             }
+
+            Aliases = new Dictionary<string, string>();
         }
 
 
@@ -351,6 +354,11 @@ namespace TAS
         }
         public void RunCommand(string command)
         {
+            if (Aliases.ContainsKey(command))
+            {
+                RunCommand(Aliases[command]);
+                return;
+            }
             string[] tokens = command.Trim().Split(' ');
             string func = tokens[0];
             string[] parameters = tokens.Skip(1).ToArray();
