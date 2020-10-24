@@ -16,6 +16,8 @@ using TAS.Wrappers;
 using SpriteBatch = StardewValley.SpriteBatch;
 using DateTime = StardewValley.DateTime;
 using TAS.Utilities;
+using Newtonsoft.Json;
+using Steamworks;
 
 namespace TAS
 {
@@ -82,6 +84,8 @@ namespace TAS
 
             content = new LocalizedContentManager(base.Content.ServiceProvider, base.Content.RootDirectory);
             console = new CommandConsole();
+
+            LoadEngineState();
         }
 
         protected override void OnActivated(object sender, EventArgs args)
@@ -178,6 +182,70 @@ namespace TAS
         {
             ResetGame = true;
             FastAdvance = fastAdvance;
+        }
+
+        public void SaveEngineState()
+        {
+            EngineState state = new EngineState();
+            string filePath = Path.Combine(Constants.BasePath, "engine_state.json");
+            using (StreamWriter file = File.CreateText(filePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.Serialize(file, state);
+            }
+        }
+
+        public void LoadEngineState()
+        {
+            string filePath = Path.Combine(Constants.BasePath, "engine_state.json");
+            if (!File.Exists(filePath))
+                return;
+            
+            EngineState state = null;
+            using (StreamReader file = File.OpenText(filePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                // TODO: any safety rails for overwriting current State?
+                state = (EngineState)serializer.Deserialize(file, typeof(EngineState));
+            }
+            state.UpdateGame();
+        }
+        private class EngineState
+        {
+            public Dictionary<string, string> Aliases;
+            public Dictionary<string, bool> OverlayState;
+            public Dictionary<string, bool> GameLogicState;
+
+            public EngineState()
+            {
+                Aliases = new Dictionary<string, string>(console.Aliases);
+                OverlayState = new Dictionary<string, bool>();
+                foreach (var overlay in Controller.Overlays)
+                {
+                    OverlayState.Add(overlay.Key, overlay.Value.Active);
+                }
+                GameLogicState = new Dictionary<string, bool>();
+                foreach (var logic in Controller.GameLogics)
+                {
+                    GameLogicState.Add(logic.Key, logic.Value.Active);
+                }
+            }
+
+            public void UpdateGame()
+            {
+                console.Aliases = new Dictionary<string, string>(Aliases);
+                foreach (var overlay in OverlayState)
+                {
+                    if (Controller.Overlays.ContainsKey(overlay.Key))
+                        Controller.Overlays[overlay.Key].Active = overlay.Value;
+                }
+                foreach (var logic in GameLogicState)
+                {
+                    if (Controller.GameLogics.ContainsKey(logic.Key))
+                        Controller.GameLogics[logic.Key].Active = logic.Value;
+                }
+            }
         }
     }
 }
