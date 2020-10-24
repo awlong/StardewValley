@@ -1,22 +1,10 @@
 # TODO List 
 
-This will be continuously added to, I should really use github projects vs this but :man_shrugging:.
+This list is slowly being cleared out, all future updates are in the github [project](https://github.com/awlong/StardewValley-TAS/projects/1)
 
 ## Upcoming
 
-- [ ] Add overlays beyond mouse
-    - [X] Tile grid
-    - [X] Draw on Tile
-    - [X] Draw line between tiles
-    - [X] Draw text inside tile
-    - [X] Hitboxes
-    - [X] Mouse Coords
-    - [X] Crop Quality Date
-    - [X] Rock Ladder Drop #
-    - [X] Walkable tiles
-    - [X] Mixed Seed planting
-    - [ ] Sleep details
-    - [ ] Info panels
+
 - [ ] Commands via console
     - [ ] Peek the next set of random numbers
     - [ ] List MineContainers
@@ -36,15 +24,6 @@ This will be continuously added to, I should really use github projects vs this 
     - [X] List Friendships
     - [X] List Player Details (pos, luck, steps, ene, hp, xp)
     - [X] List TrashCans
-- Automation logic
-    - [X] Minimum time path to tile
-        - [X] Code to find the path (copy)
-        - [X] Overlay to draw the path
-        - [X] GameLogic to advance along the path
-        - [X] Commands to find the path and advance either the next stage or all steps
-    - [X] Auto swing pickup
-        - [X] auto swap to melee weapon
-        - [X] on next frame anim cancel
 - [ ] DOCUMENTATION
     - [ ] getting started for code build
     - [ ] getting started with the tas interface
@@ -106,6 +85,28 @@ Features to look into:
     - [X] write to log/entry from outside function
     - [X] handle subscribing to current console input (sub/unsub)
     - [X] function where code can open/close the console
+- [X] Add overlays beyond mouse
+    - [X] Tile grid
+    - [X] Draw on Tile
+    - [X] Draw line between tiles
+    - [X] Draw text inside tile
+    - [X] Hitboxes
+    - [X] Mouse Coords
+    - [X] Crop Quality Date
+    - [X] Rock Ladder Drop #
+    - [X] Walkable tiles
+    - [X] Mixed Seed planting
+    - [X] Sleep details
+    - [X] Info panels
+- Automation logic
+    - [X] Minimum time path to tile
+        - [X] Code to find the path (copy)
+        - [X] Overlay to draw the path
+        - [X] GameLogic to advance along the path
+        - [X] Commands to find the path and advance either the next stage or all steps
+    - [X] Auto swing pickup
+        - [X] auto swap to melee weapon
+        - [X] on next frame anim cancel
 
 ## Things to consider later
 

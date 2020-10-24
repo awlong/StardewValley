@@ -110,7 +110,7 @@ namespace TAS.Overlays
 
             int numFrames = WeaponDetails.GetNumberOfSwingFrames(weapon, index);
             DrawRectGlobal(spriteBatch, areaOfEffect, rectColor);
-            DrawCenteredTextInRect(spriteBatch, areaOfEffect, numFrames.ToString(), textColor, 1.5f);
+            DrawCenteredTextInRectGlobal(spriteBatch, areaOfEffect, numFrames.ToString(), textColor, 1.5f, 1);
         }
     }
 }

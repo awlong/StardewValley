@@ -29,10 +29,14 @@ namespace TAS.Overlays
 
         private static Rectangle? OutlineRect;
 
+        protected Vector2 MeasureString(string text, float scale=1)
+        {
+            return Font.MeasureString(text) * scale;
+        }
         protected void DrawText(SpriteBatch spriteBatch, string text, Vector2 vector, Color textColor, Color backgroundColor, float fontScale = 1)
         {
             // measure font and offset vector if drawing offscreen
-            Vector2 textSize = Font.MeasureString(text) * fontScale;
+            Vector2 textSize = MeasureString(text, fontScale);
             if (vector.X + textSize.X > Globals.ViewportWidth)
                 vector.X = Globals.ViewportWidth - textSize.X;
             else if (vector.X < 0)
@@ -55,7 +59,7 @@ namespace TAS.Overlays
             float startY = vector.Y;
             foreach (var line in text)
             {
-                Vector2 textSize = Font.MeasureString(line) * fontScale;
+                Vector2 textSize = MeasureString(line, fontScale);
                 if (textSize.X > maxWidth)
                     maxWidth = textSize.X;
                 height += textSize.Y;
@@ -177,13 +181,23 @@ namespace TAS.Overlays
             Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
             DrawRectLocal(spriteBatch, new Rectangle((int)local.X, (int)local.Y, Game1.tileSize, Game1.tileSize), color);
         }
-        protected void DrawCenteredTextInRect(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1, int shadowOffset = 1)
+        protected void DrawCenteredTextInRectGlobal(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1, int shadowOffset = 0)
         {
             // measure font and offset vector if drawing offscreen
             Rectangle local = Game1.GlobalToLocal(Game1.viewport, rect);
-            Vector2 textSize = Font.MeasureString(text) * fontScale;
+            Vector2 textSize = MeasureString(text, fontScale);
             Vector2 pos = (new Vector2(local.Width - textSize.X, local.Height - textSize.Y) / 2) + new Vector2(local.X, local.Y);
-            spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+            if (shadowOffset != 0)
+                spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
+        }
+        protected void DrawCenteredTextInRectLocal(SpriteBatch spriteBatch, Rectangle rect, string text, Color color, float fontScale = 1, int shadowOffset = 0)
+        {
+            // measure font and offset vector if drawing offscreen
+            Vector2 textSize = MeasureString(text, fontScale);
+            Vector2 pos = (new Vector2(rect.Width - textSize.X, rect.Height - textSize.Y) / 2) + new Vector2(rect.X, rect.Y);
+            if (shadowOffset != 0)
+                spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
             spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
         }
         protected void DrawCenteredTextInTile(SpriteBatch spriteBatch, Vector2 tile, string text, Color color, float fontScale = 1, int shadowOffset = 1)
@@ -191,7 +205,7 @@ namespace TAS.Overlays
             // measure font and offset vector if drawing offscreen
             Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
             Rectangle rect = new Rectangle((int)local.X, (int)local.Y, Game1.tileSize, Game1.tileSize);
-            Vector2 textSize = Font.MeasureString(text) * fontScale;
+            Vector2 textSize = MeasureString(text, fontScale);
             Vector2 pos = (new Vector2(rect.Width - textSize.X, rect.Height - textSize.Y) / 2) + new Vector2(rect.X, rect.Y);
             spriteBatch.DrawString(Font, text, new Vector2(pos.X + shadowOffset, pos.Y + shadowOffset), Color.Black, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
             spriteBatch.DrawString(Font, text, pos, color, 0f, Vector2.Zero, fontScale, SpriteEffects.None, 1f);
@@ -210,6 +224,11 @@ namespace TAS.Overlays
                 OutlineRect = new Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 29, -1, -1));
             Vector2 local = Game1.GlobalToLocal(Game1.viewport, tile * Game1.tileSize);
             spriteBatch.Draw(Game1.mouseCursors, local, OutlineRect, color, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1f);
+        }
+
+        protected void DrawRectFromTexture(SpriteBatch spriteBatch, Texture2D texture, Rectangle sourceRect, Rectangle destRect)
+        {
+            spriteBatch.Draw(texture, destRect, sourceRect, Color.White);
         }
     }
 }
