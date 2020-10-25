@@ -33,6 +33,7 @@ namespace TAS
         public static bool ResetGame;
         public static bool FastAdvance;
         public static int ReplayNormalFrames = 30;
+        public static int ApproxFastFramesBetweenRender = 30;
         public static CommandConsole console;
         public static LocalizedContentManager content;
         public static PathFinder pathFinder;
@@ -139,14 +140,20 @@ namespace TAS
 
         private void RunFast()
         {
+            int counter = 0;
             SpriteBatch.Active = false;
             while ((int)DateTime.CurrentFrame + ReplayNormalFrames < Controller.State.Count)
             {
                 GameTime gameTime = DateTime.CurrentGameTime;
                 UpdateGame(ref gameTime);
                 DrawGame(ref gameTime);
+                if (counter++ >= ApproxFastFramesBetweenRender)
+                    break;
             }
             SpriteBatch.Active = true;
+            // enable the draw for 1 frame
+            if (counter >= ApproxFastFramesBetweenRender)
+                FastAdvance = true;
         }
 
         public void SetupGame1()
